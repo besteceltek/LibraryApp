@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
+import { UpdatePageContext } from '../../context/UpdatePageProvider'
 import axios from "axios"
 
 function Authors({ setLoading }) {
   const [authors, setAuthors] = useState([])
-  const [update, setUpdate] = useState(false)
+  const { update, setUpdate } = useContext(UpdatePageContext)
   const [newAuthor, setNewAuthor] = useState(
     {
       name: "",
@@ -159,7 +160,7 @@ function Authors({ setLoading }) {
       {authors.map((author, index) => (
         <div key={index}>
           <p>
-            {index + 1} - {author.name} {author.country} - 
+            {index + 1} - {author.name} - {author.country} - {author.birthDate} - 
             <span id={author.id} onClick={handleDeleteAuthor}>X</span> - 
             <span onClick={() => handleUpdateAuthorBtn(author)}>U</span>
           </p>
