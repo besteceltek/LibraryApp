@@ -40,3 +40,15 @@
 .read-the-docs {
   color: #888;
 }
+
+.authorInputs {
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar {
+  top: 0;
+  right: 0;
+  display: flex;
+  gap: 2rem;
+}
