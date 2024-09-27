@@ -1,10 +1,10 @@
 import { useEffect, useState, useContext } from 'react'
 import { UpdatePageContext } from '../../context/UpdatePageProvider'
+import { LoadingContext } from '../../context/LoadingProvider'
 import axios from "axios"
 
-function Authors({ setLoading }) {
+function Authors() {
   const [authors, setAuthors] = useState([])
-  const { update, setUpdate } = useContext(UpdatePageContext)
   const [newAuthor, setNewAuthor] = useState(
     {
       name: "",
@@ -20,74 +20,80 @@ function Authors({ setLoading }) {
       country: ""
     }
   )
+  const { updatePage, setUpdatePage } = useContext(UpdatePageContext)
+  const { loading, setLoading } = useContext(LoadingContext)
 
   useEffect(() => {
-      axios.get("http://127.0.0.1:8080/api/v1/authors")
-      .then(res => {
-        setAuthors(res.data)
-        setLoading(false)
-        setUpdate(true)
-      })
-    }, [update])
+    axios.get("http://127.0.0.1:8080/api/v1/authors")
+    .then(res => {
+      setAuthors(res.data)
+      setLoading(false)
+      setUpdatePage((prev) => !prev)
+    })
+  }, [updatePage])
   
-    const handleAddAuthor = () => {
-      axios.post("http://127.0.0.1:8080/api/v1/authors", newAuthor)
-      .then(() => {
-        setUpdate(false)
-        setNewAuthor(
-          {
-            name: "",
-            birthDate: "",
-            country: ""
-          }
-        )
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    }
-  
-    const handleNewAuthorInputChange = (e) => {
-      const { name, value } = e.target
-      setNewAuthor((prev) => ({
-        ...prev,
-        [name]: value,
-      }))
-    }
-  
-    const handleDeleteAuthor = (e) => {
-      axios.delete("http://127.0.0.1:8080/api/v1/authors/" + e.target.id)
-      .then(() => {
-        setUpdate(false)
-      })
-    }
-  
-    const handleUpdateAuthor = () => {
-      axios.put("http://127.0.0.1:8080/api/v1/authors/" + updateAuthor.id, updateAuthor)
-      .then(() => {
-        setUpdate(false)
-        setUpdateAuthor(
-          {
-            id: "",
-            name: "",
-            birthDate: "",
-            country: ""
-          }
-        )
-      })
-    }
-  
-    const handleUpdateAuthorInputChange = (e) => {
-      const { name, value } = e.target
-      setUpdateAuthor((prev) => ({
-        ...prev,
-        [name]: value,
-      }))
-    }
-  
-    const handleUpdateAuthorBtn = (author) => {
-      setUpdateAuthor(author)
-    }
+  const handleAddAuthor = () => {
+    axios.post("http://127.0.0.1:8080/api/v1/authors", newAuthor)
+    .then(() => {
+      setUpdatePage((prev) => !prev)
+      setNewAuthor(
+        {
+          name: "",
+          birthDate: "",
+          country: ""
+        }
+      )
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
+  const handleNewAuthorInputChange = (e) => {
+    const { name, value } = e.target
+    setNewAuthor((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
+
+  const handleDeleteAuthor = (e) => {
+    axios.delete("http://127.0.0.1:8080/api/v1/authors/" + e.target.id)
+    .then(() => {
+      setUpdatePage((prev) => !prev)
+    })
+  }
+
+  const handleUpdateAuthor = () => {
+    axios.put("http://127.0.0.1:8080/api/v1/authors/" + updateAuthor.id, updateAuthor)
+    .then(() => {
+      setUpdatePage((prev) => !prev)
+      setUpdateAuthor(
+        {
+          id: "",
+          name: "",
+          birthDate: "",
+          country: ""
+        }
+      )
+    })
+  }
+
+  const handleUpdateAuthorInputChange = (e) => {
+    const { name, value } = e.target
+    setUpdateAuthor((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
+
+  const handleUpdateAuthorBtn = (author) => {
+    setUpdateAuthor(author)
+  }
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <>
