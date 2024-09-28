@@ -25,7 +25,7 @@ function Publishers() {
     axios.get("http://127.0.0.1:8080/api/v1/publishers")
     .then((res) => {
       setPublishers(res.data)
-      setUpdatePage((prev) => !prev)
+      setUpdatePage(false)
     })
   }, [updatePage])
 
@@ -40,7 +40,7 @@ function Publishers() {
   const handleAddPublisher = () => {
     axios.post("http://127.0.0.1:8080/api/v1/publishers", newPublisher)
     .then(() => {
-      setUpdatePage((prev) => !prev)
+      setUpdatePage(true)
       setNewPublisher(
         {
           name: "",
@@ -57,7 +57,7 @@ function Publishers() {
   const handleDeletePublisher = (e) => {
     axios.delete("http://127.0.0.1:8080/api/v1/publishers/" + e.target.id)
     .then(() => {
-      setUpdatePage((prev) => !prev)
+      setUpdatePage(true)
     })
   }
 
@@ -76,7 +76,7 @@ function Publishers() {
   const handleUpdatePublisher = () => {
     axios.put("http://127.0.0.1:8080/api/v1/publishers/" + updatePublisher.id, updatePublisher)
     .then(() => {
-      setUpdatePage((prev) => !prev)
+      setUpdatePage(true)
       setUpdatePublisher(
         {
           id: "",

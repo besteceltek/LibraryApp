@@ -28,14 +28,14 @@ function Authors() {
     .then(res => {
       setAuthors(res.data)
       setLoading(false)
-      setUpdatePage((prev) => !prev)
+      setUpdatePage(false)
     })
   }, [updatePage])
   
   const handleAddAuthor = () => {
     axios.post("http://127.0.0.1:8080/api/v1/authors", newAuthor)
     .then(() => {
-      setUpdatePage((prev) => !prev)
+      setUpdatePage(true)
       setNewAuthor(
         {
           name: "",
@@ -60,14 +60,14 @@ function Authors() {
   const handleDeleteAuthor = (e) => {
     axios.delete("http://127.0.0.1:8080/api/v1/authors/" + e.target.id)
     .then(() => {
-      setUpdatePage((prev) => !prev)
+      setUpdatePage(true)
     })
   }
 
   const handleUpdateAuthor = () => {
     axios.put("http://127.0.0.1:8080/api/v1/authors/" + updateAuthor.id, updateAuthor)
     .then(() => {
-      setUpdatePage((prev) => !prev)
+      setUpdatePage(true)
       setUpdateAuthor(
         {
           id: "",
@@ -167,8 +167,8 @@ function Authors() {
         <div key={index}>
           <p>
             {index + 1} - {author.name} - {author.country} - {author.birthDate} - 
-            <span id={author.id} onClick={handleDeleteAuthor}>X</span> - 
-            <span onClick={() => handleUpdateAuthorBtn(author)}>U</span>
+            <span id={author.id} onClick={handleDeleteAuthor}> X</span> - 
+            <span onClick={() => handleUpdateAuthorBtn(author)}> U</span>
           </p>
         </div>
       ))}
