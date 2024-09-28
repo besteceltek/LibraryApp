@@ -22,7 +22,7 @@ function Publishers() {
   const { updatePage, setUpdatePage } = useContext(UpdatePageContext)
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8080/api/v1/publishers")
+    axios.get(import.meta.env.BASE_URL + "/api/v1/publishers")
     .then((res) => {
       setPublishers(res.data)
       setUpdatePage(false)
@@ -38,7 +38,7 @@ function Publishers() {
   }
 
   const handleAddPublisher = () => {
-    axios.post("http://127.0.0.1:8080/api/v1/publishers", newPublisher)
+    axios.post(import.meta.env.BASE_URL + "/api/v1/publishers", newPublisher)
     .then(() => {
       setUpdatePage(true)
       setNewPublisher(
@@ -55,7 +55,7 @@ function Publishers() {
   }
 
   const handleDeletePublisher = (e) => {
-    axios.delete("http://127.0.0.1:8080/api/v1/publishers/" + e.target.id)
+    axios.delete(import.meta.env.BASE_URL + "/api/v1/publishers/" + e.target.id)
     .then(() => {
       setUpdatePage(true)
     })
@@ -74,7 +74,7 @@ function Publishers() {
   }
 
   const handleUpdatePublisher = () => {
-    axios.put("http://127.0.0.1:8080/api/v1/publishers/" + updatePublisher.id, updatePublisher)
+    axios.put(import.meta.env.BASE_URL + "/api/v1/publishers/" + updatePublisher.id, updatePublisher)
     .then(() => {
       setUpdatePage(true)
       setUpdatePublisher(

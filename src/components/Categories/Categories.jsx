@@ -20,7 +20,7 @@ function Categories() {
   )
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8080/api/v1/categories")
+    axios.get(import.meta.env.BASE_URL + "/api/v1/categories")
     .then((res) => {
       setCategories(res.data)
       setUpdatePage(false)
@@ -36,7 +36,7 @@ function Categories() {
   }
 
   const handleAddCategory = () => {
-    axios.post("http://127.0.0.1:8080/api/v1/categories", newCategory)
+    axios.post(import.meta.env.BASE_URL + "/api/v1/categories", newCategory)
     .then(() => {
       setUpdatePage(true)
       setNewCategory(
@@ -49,7 +49,7 @@ function Categories() {
   }
 
   const handleDeleteCategory = (e) => {
-    axios.delete("http://127.0.0.1:8080/api/v1/categories/" + e.target.id)
+    axios.delete(import.meta.env.BASE_URL + "/api/v1/categories/" + e.target.id)
     .then(() => {
       setUpdatePage(true)
     })
@@ -68,7 +68,7 @@ function Categories() {
   }
 
   const handleUpdateCategory = () => {
-    axios.put("http://127.0.0.1:8080/api/v1/categories/" + updateCategory.id, updateCategory)
+    axios.put(import.meta.env.BASE_URL + "/api/v1/categories/" + updateCategory.id, updateCategory)
     .then(() => {
       setUpdatePage(true)
       setUpdateCategory(
