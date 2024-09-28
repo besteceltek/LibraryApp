@@ -24,7 +24,7 @@ function Authors() {
   const { loading, setLoading } = useContext(LoadingContext)
 
   useEffect(() => {
-    axios.get(import.meta.env.BASE_URL + "/api/v1/authors")
+    axios.get(import.meta.env.VITE_APP_BASE_URL + "/api/v1/authors")
     .then(res => {
       setAuthors(res.data)
       setLoading(false)
@@ -33,7 +33,7 @@ function Authors() {
   }, [updatePage])
   
   const handleAddAuthor = () => {
-    axios.post(import.meta.env.BASE_URL + "/api/v1/authors", newAuthor)
+    axios.post(import.meta.env.VITE_APP_BASE_URL + "/api/v1/authors", newAuthor)
     .then(() => {
       setUpdatePage(true)
       setNewAuthor(
@@ -58,14 +58,14 @@ function Authors() {
   }
 
   const handleDeleteAuthor = (e) => {
-    axios.delete(import.meta.env.BASE_URL + "/api/v1/authors/" + e.target.id)
+    axios.delete(import.meta.env.VITE_APP_BASE_URL + "/api/v1/authors/" + e.target.id)
     .then(() => {
       setUpdatePage(true)
     })
   }
 
   const handleUpdateAuthor = () => {
-    axios.put(import.meta.env.BASE_URL + "/api/v1/authors/" + updateAuthor.id, updateAuthor)
+    axios.put(import.meta.env.VITE_APP_BASE_URL + "/api/v1/authors/" + updateAuthor.id, updateAuthor)
     .then(() => {
       setUpdatePage(true)
       setUpdateAuthor(
