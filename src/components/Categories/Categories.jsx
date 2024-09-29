@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react"
 import { UpdatePageContext } from '../../context/UpdatePageProvider'
 import axios from "axios"
 import CategoryTable from "./CategoryTable"
+import ErrorModal from "../ErrorModal"
 
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -82,6 +83,11 @@ function Categories() {
           name: "",
           description: ""
         }
+      )
+    })
+    .catch((err) => {
+      return (
+        <ErrorModal error={err} />
       )
     })
   }
