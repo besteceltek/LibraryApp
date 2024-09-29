@@ -1,6 +1,11 @@
 import { useEffect, useState, useContext } from 'react'
 import { UpdatePageContext } from '../../context/UpdatePageProvider'
 import axios from "axios"
+import PublisherTable from './PublisherTable'
+
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 function Publishers() {
   const [publishers, setPublishers] = useState([])
@@ -93,77 +98,82 @@ function Publishers() {
       <div className="publisherInputs">
         <div className='addPublisher'>
           <h3>New Publisher</h3>
-          <input
-            type="text"
-            placeholder='Name'
-            name='name'
-            value={newPublisher.name}
-            autoComplete='off'
-            onChange={handleNewPublisherInputChange}
-          />
-          <br />
-          <input
-            type="text"
-            placeholder='Establishment Year'
-            name='establishmentYear'
-            value={newPublisher.establishmentYear}
-            autoComplete='off'
-            onChange={handleNewPublisherInputChange}
-          />
-          <br />
-          <input
-            type="text"
-            placeholder='Address'
-            name='address'
-            value={newPublisher.address}
-            autoComplete='off'
-            onChange={handleNewPublisherInputChange}
-          />
-          <br />
-          <button onClick={handleAddPublisher}>Gönder</button>
+          <Box
+            className="publisherForm"
+            component="form"
+            noValidate
+            autoComplete="off"
+          >
+            <TextField
+              required
+              label="Name"
+              name="name"
+              defaultValue={newPublisher.name}
+              size="small"
+              onChange={handleNewPublisherInputChange}
+            />
+            <TextField
+              required
+              label="Establishment Year"
+              name="establishmentYear"
+              defaultValue={newPublisher.description}
+              size="small"
+              onChange={handleNewPublisherInputChange}
+            />
+            <TextField
+              required
+              label="Address"
+              name="address"
+              defaultValue={newPublisher.address}
+              size="small"
+              onChange={handleNewPublisherInputChange}
+            />
+          </Box>
+          <Button color="secondary" variant="contained" onClick={handleAddPublisher}>Create</Button>
         </div>
         <div className='updatePublisher'>
           <h3>New Publisher</h3>
-          <input
-            type="text"
-            placeholder='Name'
-            name='name'
-            value={updatePublisher.name}
-            autoComplete='off'
-            onChange={handleUpdatePublisherInputChange}
-          />
-          <br />
-          <input
-            type="text"
-            placeholder='Establishment Year'
-            name='establishmentYear'
-            value={updatePublisher.establishmentYear}
-            autoComplete='off'
-            onChange={handleUpdatePublisherInputChange}
-          />
-          <br />
-          <input
-            type="text"
-            placeholder='Address'
-            name='address'
-            value={updatePublisher.address}
-            autoComplete='off'
-            onChange={handleUpdatePublisherInputChange}
-          />
-          <br />
-          <button onClick={handleUpdatePublisher}>Gönder</button>
+          <Box
+            className="publisherForm"
+            component="form"
+            noValidate
+            autoComplete="off"
+          >
+            <TextField
+              required
+              label="Name"
+              name="name"
+              defaultValue={updatePublisher.name}
+              size="small"
+              onChange={handleUpdatePublisherInputChange}
+            />
+            <TextField
+              required
+              label="Establishment Year"
+              name="establishmentYear"
+              defaultValue={updatePublisher.description}
+              size="small"
+              onChange={handleUpdatePublisherInputChange}
+            />
+            <TextField
+              required
+              label="Address"
+              name="address"
+              defaultValue={updatePublisher.address}
+              size="small"
+              onChange={handleUpdatePublisherInputChange}
+            />
+          </Box>
+          <Button color="secondary" variant="contained" onClick={handleUpdatePublisher}>Update</Button>
         </div>
       </div>
       <h1>Publishers</h1>
-      {publishers.map((publisher, index) => (
-        <div key={index}>
-          <p>
-            {index + 1} - {publisher.name} - {publisher.establishmentYear} - {publisher.address} -
-            <span id={publisher.id} onClick={handleDeletePublisher}>X</span> - 
-            <span onClick={() => handleUpdatePublisherBtn(publisher)}>U</span>
-          </p>
-        </div>
-      ))}
+      <PublisherTable
+        publishers={publishers}
+        newPublisher={newPublisher}
+        handleUpdatePublisherBtn={handleUpdatePublisherBtn}
+        handleDeletePublisher={handleDeletePublisher}
+      />
     </div>
   )
 }
