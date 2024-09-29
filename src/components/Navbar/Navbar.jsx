@@ -9,18 +9,19 @@ import Button from '@mui/material/Button';
 
 function Navbar() {
   const { setActivePage } = useContext(ActivePageContext)
+
   const pages = ['Dashboard', 'Books', 'Authors', 'Categories', 'Publishers', 'Borrows'];
 
   return (
     <div className="navbar">
-      <AppBar position="static">
+      <AppBar position="static" color="secondary" sx={{ borderRadius: "1.5rem"}}>
         <Container>
           <Toolbar>
             <Box sx={{ display: { md: 'flex' } }}>
               {pages.map((page) => (
                 <Button
                   key={page}
-                  sx={{ color: 'white', display: 'block' }}
+                  sx={{ color: '#F4F5F6', display: 'block' }}
                   onClick={() => setActivePage(page)}
                 >
                   {page}
