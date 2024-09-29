@@ -108,7 +108,7 @@ function Publishers() {
               required
               label="Name"
               name="name"
-              defaultValue={newPublisher.name}
+              defaultValue={""}
               size="small"
               onChange={handleNewPublisherInputChange}
             />
@@ -116,7 +116,7 @@ function Publishers() {
               required
               label="Establishment Year"
               name="establishmentYear"
-              defaultValue={newPublisher.description}
+              defaultValue={""}
               size="small"
               onChange={handleNewPublisherInputChange}
             />
@@ -124,7 +124,7 @@ function Publishers() {
               required
               label="Address"
               name="address"
-              defaultValue={newPublisher.address}
+              defaultValue={""}
               size="small"
               onChange={handleNewPublisherInputChange}
             />
@@ -143,7 +143,7 @@ function Publishers() {
               required
               label="Name"
               name="name"
-              defaultValue={0}
+              defaultValue={""}
               value={updatePublisher.name}
               size="small"
               onChange={handleUpdatePublisherInputChange}
@@ -161,7 +161,7 @@ function Publishers() {
               required
               label="Address"
               name="address"
-              defaultValue={0}
+              defaultValue={""}
               value={updatePublisher.address}
               size="small"
               onChange={handleUpdatePublisherInputChange}
