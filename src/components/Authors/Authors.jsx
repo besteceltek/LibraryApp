@@ -163,15 +163,15 @@ function Authors() {
     </div>
     <br />
     <h1>Authors</h1>
-      {authors.map((author, index) => (
-        <div key={index}>
-          <p>
-            {index + 1} - {author.name} - {author.country} - {author.birthDate} - 
-            <span id={author.id} onClick={handleDeleteAuthor}> X</span> - 
-            <span onClick={() => handleUpdateAuthorBtn(author)}> U</span>
-          </p>
-        </div>
-      ))}
+    {authors.map((author, index) => (
+      <div key={index}>
+        <p>
+          {index + 1} - {author.name} - {author.country} - {author.birthDate} - 
+          <span id={author.id} onClick={handleDeleteAuthor}> X</span> - 
+          <span onClick={() => handleUpdateAuthorBtn(author)}> U</span>
+        </p>
+      </div>
+    ))}
     </>
   )
 }
