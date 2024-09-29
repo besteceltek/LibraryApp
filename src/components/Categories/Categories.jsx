@@ -2,10 +2,11 @@ import { useEffect, useState, useContext } from "react"
 import { UpdatePageContext } from '../../context/UpdatePageProvider'
 import axios from "axios"
 import CategoryTable from "./CategoryTable"
+import FormTextField from "../FormTextField";
+
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import FormTextField from "../FormTextField";
 
 function Categories() {
   const [categories, setCategories] = useState([])
@@ -118,7 +119,7 @@ function Categories() {
               onChange={handleNewCategoryInputChange}
             />
           </Box>
-          <Button color="secondary" variant="contained" onClick={handleAddCategory}>Gönder</Button>
+          <Button color="secondary" variant="contained" onClick={handleAddCategory}>Create</Button>
         </div>
         <div className="updateCategory">
           <h3>Update Category</h3>
@@ -145,7 +146,7 @@ function Categories() {
               onChange={handleUpdateCategoryInputChange}
             />
           </Box>
-          <Button color="secondary" variant="contained" onClick={handleUpdateCategory}>Gönder</Button>
+          <Button color="secondary" variant="contained" onClick={handleUpdateCategory}>Update</Button>
         </div>
       </div>
       <h1>Categories</h1>
