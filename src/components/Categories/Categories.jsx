@@ -2,7 +2,6 @@ import { useEffect, useState, useContext } from "react"
 import { UpdatePageContext } from '../../context/UpdatePageProvider'
 import axios from "axios"
 import CategoryTable from "./CategoryTable"
-import FormTextField from "../FormTextField";
 
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
