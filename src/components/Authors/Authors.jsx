@@ -2,6 +2,11 @@ import { useEffect, useState, useContext } from 'react'
 import { UpdatePageContext } from '../../context/UpdatePageProvider'
 import { LoadingContext } from '../../context/LoadingProvider'
 import axios from "axios"
+import AuthorTable from './AuthorTable'
+
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 function Authors() {
   const [authors, setAuthors] = useState([])
@@ -57,13 +62,6 @@ function Authors() {
     }))
   }
 
-  const handleDeleteAuthor = (e) => {
-    axios.delete(import.meta.env.VITE_APP_BASE_URL + "/api/v1/authors/" + e.target.id)
-    .then(() => {
-      setUpdatePage(true)
-    })
-  }
-
   const handleUpdateAuthor = () => {
     axios.put(import.meta.env.VITE_APP_BASE_URL + "/api/v1/authors/" + updateAuthor.id, updateAuthor)
     .then(() => {
@@ -98,80 +96,87 @@ function Authors() {
   return (
     <>
     <div className='authorInputs'>
-      <div>
+      <div className='addAuthor'>
         <h3>New Author</h3>
-        <input
-          type="text"
-          placeholder='Name'
-          onChange={handleNewAuthorInputChange}
-          name='name'
-          value={newAuthor.name}
-          autoComplete='off'
-        />
-        <br />
-        <input
-          type="text"
-          placeholder='Country'
-          onChange={handleNewAuthorInputChange}
-          name='country'
-          value={newAuthor.country}
-          autoComplete='off'
-        />
-        <br />
-        <input
-          type="text"
-          placeholder='Birth Date'
-          onChange={handleNewAuthorInputChange}
-          name='birthDate'
-          value={newAuthor.birthDate}
-          autoComplete='off'
-        />
-        <br />
-        <button onClick={handleAddAuthor}>Gönder</button>
+        <Box
+          className="authorForm"
+          component="form"
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            required
+            label="Name"
+            name="name"
+            defaultValue={newAuthor.name}
+            size="small"
+            onChange={handleNewAuthorInputChange}
+          />
+          <TextField
+            required
+            label="Country"
+            name="country"
+            defaultValue={newAuthor.description}
+            size="small"
+            onChange={handleNewAuthorInputChange}
+          />
+          <TextField
+            required
+            label="Birth Date"
+            name="birthDate"
+            defaultValue={newAuthor.address}
+            size="small"
+            onChange={handleNewAuthorInputChange}
+          />
+        </Box>
+        <Button color="secondary" variant="contained" onClick={handleAddAuthor}>Create</Button>
       </div>
-      <div>
+      <div className='updateAuthor'>
         <h3>Update Author</h3>
-        <input
-          type="text"
-          placeholder='Name'
-          onChange={handleUpdateAuthorInputChange}
-          name='name'
-          value={updateAuthor.name}
-          autoComplete='off'
-        />
-        <br />
-        <input
-          type="text"
-          placeholder='Country'
-          onChange={handleUpdateAuthorInputChange}
-          name='country'
-          value={updateAuthor.country}
-          autoComplete='off'
-        />
-        <br />
-        <input
-          type="text"
-          placeholder='Birth Date'
-          onChange={handleUpdateAuthorInputChange}
-          name='birthDate'
-          value={updateAuthor.birthDate}
-          autoComplete='off'
-        />
-        <br />
-        <button onClick={handleUpdateAuthor}>Gönder</button>
+        <Box
+          className="authorForm"
+          component="form"
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            required
+            label="Name"
+            name="name"
+            defaultValue={0}
+            value={updateAuthor.name}
+            size="small"
+            onChange={handleUpdateAuthorInputChange}
+          />
+          <TextField
+            required
+            label="Country"
+            name="country"
+            defaultValue={""}
+            value={updateAuthor.country}
+            size="small"
+            onChange={handleUpdateAuthorInputChange}
+          />
+          <TextField
+            required
+            label="Birth Date"
+            name="birthDate"
+            defaultValue={""}
+            value={updateAuthor.birthDate}
+            size="small"
+            onChange={handleUpdateAuthorInputChange}
+          />
+        </Box>
+        <Button color="secondary" variant="contained" onClick={handleUpdateAuthor}>Update</Button>
       </div>
     </div>
     <br />
     <h1>Authors</h1>
-    {authors.map((author, index) => (
-      <div key={index}>
-        <p>
-          {index + 1} - {author.name} - {author.country} - {author.birthDate} - 
-          <span id={author.id} onClick={handleDeleteAuthor}> X</span> - 
-          <span onClick={() => handleUpdateAuthorBtn(author)}> U</span>
-        </p>
-      </div>
-    ))}
+    <AuthorTable
+      authors={authors}
+      newAuthor={newAuthor}
+      handleUpdateAuthorBtn={handleUpdateAuthorBtn}
+    />
     </>
   )
 }
