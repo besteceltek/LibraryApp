@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react"
 import { UpdatePageContext } from '../../context/UpdatePageProvider'
 import axios from "axios"
+import CategoryTable from "./CategoryTable"
 
 function Categories() {
   const [categories, setCategories] = useState([])
@@ -122,12 +123,12 @@ function Categories() {
         </div>
       </div>
       <h1>Categories</h1>
-      {categories.map((category, index) => (
-        <p key={index}>{index + 1} - {category.name} - {category.description} -
-          <span id={category.id} onClick={handleDeleteCategory}> X</span> -
-          <span onClick={() => {handleUpdateCategoryBtn(category)}}> U</span>
-        </p>
-      ))}
+      <CategoryTable 
+        categories= {categories}
+        newCategory= {newCategory}
+        handleUpdateCategoryBtn= {handleUpdateCategoryBtn}
+        handleDeleteCategory= {handleDeleteCategory}
+      />
     </div>
   )
 }
