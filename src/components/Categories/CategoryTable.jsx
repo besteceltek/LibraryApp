@@ -5,6 +5,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
 
 function CategoryTable({ categories, newCategory, handleUpdateCategoryBtn, handleDeleteCategory }) {
   return (
@@ -23,8 +24,12 @@ function CategoryTable({ categories, newCategory, handleUpdateCategoryBtn, handl
               <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell>{category.name}</TableCell>
                 <TableCell>{category.description}</TableCell>
-                <TableCell onClick={() => {handleUpdateCategoryBtn(category)}}>Update</TableCell>
-                <TableCell id={category.id} onClick={handleDeleteCategory}>Delete</TableCell>
+                <TableCell onClick={() => {handleUpdateCategoryBtn(category)}}>
+                  <Button color="secondary" variant="contained">Update</Button>
+                </TableCell>
+                <TableCell id={category.id} onClick={handleDeleteCategory}>
+                  <Button color="secondary" variant="contained">Delete</Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
