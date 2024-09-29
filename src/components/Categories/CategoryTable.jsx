@@ -24,11 +24,17 @@ function CategoryTable({ categories, newCategory, handleUpdateCategoryBtn, handl
               <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell>{category.name}</TableCell>
                 <TableCell>{category.description}</TableCell>
-                <TableCell onClick={() => {handleUpdateCategoryBtn(category)}}>
-                  <Button color="secondary" variant="contained">Update</Button>
+                <TableCell>
+                  <Button 
+                    onClick={() => {handleUpdateCategoryBtn(category)}} 
+                    color="secondary" 
+                    variant="contained"
+                  >
+                    Update
+                  </Button>
                 </TableCell>
-                <TableCell id={category.id} onClick={handleDeleteCategory}>
-                  <Button color="secondary" variant="contained">Delete</Button>
+                <TableCell>
+                  <Button id={category.id} onClick={handleDeleteCategory} color="secondary" variant="contained">Delete</Button>
                 </TableCell>
               </TableRow>
             ))}

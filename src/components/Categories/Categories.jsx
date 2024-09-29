@@ -133,7 +133,8 @@ function Categories() {
               required
               label="Name"
               name="name"
-              defaultValue={updateCategory.name}
+              defaultValue={0}
+              value={updateCategory.name}
               size="small"
               onChange={handleUpdateCategoryInputChange}
             />
@@ -141,7 +142,8 @@ function Categories() {
               required
               label="Description"
               name="description"
-              defaultValue={updateCategory.description}
+              defaultValue={0}
+              value={updateCategory.description}
               size="small"
               onChange={handleUpdateCategoryInputChange}
             />
