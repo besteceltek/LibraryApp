@@ -97,10 +97,6 @@ function Categories() {
             noValidate
             autoComplete="off"
           >
-            <FormTextField
-              object={newCategory}
-              func={handleNewCategoryInputChange}
-            />
             <TextField
               required
               label="Name"
