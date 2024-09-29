@@ -87,7 +87,7 @@ function Categories() {
     })
     .catch((err) => {
       return (
-        <ErrorModal error={err} />
+        <ErrorModal error={err} openValue={true}/>
       )
     })
   }
