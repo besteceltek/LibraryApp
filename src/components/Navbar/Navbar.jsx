@@ -14,13 +14,13 @@ function Navbar() {
   return (
     <div className="navbar">
       <AppBar position="static">
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
+        <Container>
+          <Toolbar>
             <Box sx={{ display: { md: 'flex' } }}>
               {pages.map((page) => (
                 <Button
                   key={page}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  sx={{ color: 'white', display: 'block' }}
                   onClick={() => setActivePage(page)}
                 >
                   {page}
