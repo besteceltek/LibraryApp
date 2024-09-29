@@ -1,18 +1,35 @@
 import { useContext } from "react"
 import { ActivePageContext } from '../../context/ActivePageProvider'
 
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+
 function Navbar() {
   const { setActivePage } = useContext(ActivePageContext)
+  const pages = ['Dashboard', 'Books', 'Authors', 'Categories', 'Publishers', 'Borrows'];
+
   return (
     <div className="navbar">
-      <div className="links">
-        <span onClick={() => setActivePage("Dashboard")}>Dashboard</span>
-        <span onClick={() => setActivePage("Books")}>Books</span>
-        <span onClick={() => setActivePage("Authors")}>Authors</span>
-        <span onClick={() => setActivePage("Categories")}>Categories</span>
-        <span onClick={() => setActivePage("Publishers")}>Publishers</span>
-        <span onClick={() => setActivePage("Rentals")}>Rentals</span>
-      </div>
+      <AppBar position="static">
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <Box sx={{ display: { md: 'flex' } }}>
+              {pages.map((page) => (
+                <Button
+                  key={page}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  onClick={() => setActivePage(page)}
+                >
+                  {page}
+                </Button>
+              ))}
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
     </div>
   )
 }
