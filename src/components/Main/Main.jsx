@@ -4,7 +4,6 @@ import Authors from "../Authors/Authors"
 import Publishers from "../Publishers/Publishers"
 import Categories from "../Categories/Categories"
 import Books from "../Books/Books"
-import Borrows from "../Borrows/Borrows"
 
 function Main() {
     const { activePage } = useContext(ActivePageContext)
