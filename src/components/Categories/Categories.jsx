@@ -2,6 +2,10 @@ import { useEffect, useState, useContext } from "react"
 import { UpdatePageContext } from '../../context/UpdatePageProvider'
 import axios from "axios"
 import CategoryTable from "./CategoryTable"
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import FormTextField from "../FormTextField";
 
 function Categories() {
   const [categories, setCategories] = useState([])
@@ -87,39 +91,61 @@ function Categories() {
       <div className="categoryInputs">
         <div className="addCategory">
           <h3>New Category</h3>
-          <input 
-            type="text" 
-            name="name" 
-            value={newCategory.name}
-            placeholder="Name"
-            onChange={handleNewCategoryInputChange} />
-          <br />
-          <input 
-            type="text" 
-            name="description" 
-            value={newCategory.description}
-            placeholder="Description"
-            onChange={handleNewCategoryInputChange} />
-          <br />
-          <button onClick={handleAddCategory}>Gönder</button>
+          <Box
+            className="categoryForm"
+            component="form"
+            noValidate
+            autoComplete="off"
+          >
+            <FormTextField
+              object={newCategory}
+              func={handleNewCategoryInputChange}
+            />
+            <TextField
+              required
+              label="Name"
+              name="name"
+              defaultValue={newCategory.name}
+              size="small"
+              onChange={handleNewCategoryInputChange}
+            />
+            <TextField
+              required
+              label="Description"
+              name="description"
+              defaultValue={newCategory.description}
+              size="small"
+              onChange={handleNewCategoryInputChange}
+            />
+          </Box>
+          <Button color="secondary" variant="contained" onClick={handleAddCategory}>Gönder</Button>
         </div>
         <div className="updateCategory">
           <h3>Update Category</h3>
-          <input 
-            type="text" 
-            name="name" 
-            value={updateCategory.name}
-            placeholder="Name"
-            onChange={handleUpdateCategoryInputChange} />
-          <br />
-          <input 
-            type="text" 
-            name="description" 
-            value={updateCategory.description}
-            placeholder="Description"
-            onChange={handleUpdateCategoryInputChange} />
-          <br />
-          <button onClick={handleUpdateCategory}>Gönder</button>
+          <Box
+            className="categoryForm"
+            component="form"
+            noValidate
+            autoComplete="off"
+          >
+            <TextField
+              required
+              label="Name"
+              name="name"
+              defaultValue={updateCategory.name}
+              size="small"
+              onChange={handleUpdateCategoryInputChange}
+            />
+            <TextField
+              required
+              label="Description"
+              name="description"
+              defaultValue={updateCategory.description}
+              size="small"
+              onChange={handleUpdateCategoryInputChange}
+            />
+          </Box>
+          <Button color="secondary" variant="contained" onClick={handleUpdateCategory}>Gönder</Button>
         </div>
       </div>
       <h1>Categories</h1>
