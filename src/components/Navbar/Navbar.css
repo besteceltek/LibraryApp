@@ -1,0 +1,45 @@
+.appbar {
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    width: 100%;
+    position: static;
+    border-radius: 1.5rem;
+    background-color: var(--secondary-color);
+}
+
+.container {
+    padding-left: 24px;
+    padding-right: 24px;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.toolbar {
+    min-height: 64px;
+    padding-left: 24px;
+    padding-right: 24px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+ul {
+    padding: 0;
+    display: flex;
+    list-style: none;
+}
+
+li {
+    position: relative;
+    cursor: pointer;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    min-width: 64px;
+    padding: 6px 8px;
+}
+
+a {
+    text-decoration: none;
+    color: var(--text-color);
+}
