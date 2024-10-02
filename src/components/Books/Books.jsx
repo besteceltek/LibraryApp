@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import axios from "axios"
 import { UpdatePageContext } from "../../context/UpdatePageProvider"
 import AppTable from "../Utils/AppTable";
+import AddModal from "../Utils/AddUpdateModals/AddModal";
 
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -12,29 +13,15 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Chip from '@mui/material/Chip';
-import { useTheme } from "@mui/material";
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
+import BookDialogContent from "./BookDialogContent";
 
-function getStyles(categoryName, selectedCategories, theme) {
-  return {
-    fontWeight: selectedCategories.includes(categoryName)
-      ? theme.typography.fontWeightMedium
-      : theme.typography.fontWeightRegular,
-  };
-}
+
+
+
 
 function Books() {
-  const theme = useTheme()
+  
   const [books, setBooks] = useState([])
   const [authors, setAuthors] = useState([])
   const [publishers, setPublishers] = useState([])
@@ -277,110 +264,24 @@ function Books() {
 
   return (
     <div>
+      <AddModal
+        dialogContent={
+          <BookDialogContent 
+            bookObject={newBook}
+            inputChangeFunction={handleNewBookInputChange}
+            handleNewBookAuthorSelect={handleNewBookAuthorSelect}
+            authors={authors}
+            handleNewBookPublisherSelect={handleNewBookPublisherSelect}
+            publishers={publishers}
+            selectedCategories={selectedCategories}
+            handleNewBookCategorySelect={handleNewBookCategorySelect}
+            categories={categories}
+          />
+        }
+        prop="Book"
+        addFunction={handleAddBook} 
+      />
       <div className="bookInputs">
-        <div className="addBook">
-          <h3>New Book</h3>
-          <Box
-            className="bookForm"
-            component="form"
-            noValidate
-            autoComplete="off"
-          >
-            <TextField
-              required
-              label="Name"
-              name="name"
-              defaultValue={newBook.name}
-              size="small"
-              onChange={handleNewBookInputChange}
-            />
-            <TextField
-              required
-              label="Publication Year"
-              name="publicationYear"
-              defaultValue={newBook.publicationYear}
-              size="small"
-              onChange={handleNewBookInputChange}
-            />
-            <TextField
-              required
-              label="Stock"
-              name="stock"
-              defaultValue={newBook.stock}
-              size="small"
-              onChange={handleNewBookInputChange}
-            />
-            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-              <InputLabel id="author-select-label">Author</InputLabel>
-              <Select
-                labelId="author-select-label"
-                defaultValue={0}
-                label="Author"
-                name="author"
-                onChange={handleNewBookAuthorSelect}
-              >
-                {authors?.map((author, index) => (
-                  <MenuItem 
-                    key={`${index}author`} 
-                    value={author.id}
-                  >
-                    {author.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-              <InputLabel id="publisher-select-label">Publisher</InputLabel>
-              <Select
-                labelId="publisherSelect"
-                defaultValue={0}
-                label="Publisher"
-                name="publisher"
-                onChange={handleNewBookPublisherSelect}
-              >
-                {publishers?.map((publisher, index) => (
-                  <MenuItem 
-                    key={`${index}publisher`} 
-                    value={publisher.id}
-                  >
-                    {publisher.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl sx={{ m: 1, width: 300}}>
-              <InputLabel id="category-select-label">Category</InputLabel>
-              <Select
-                labelId="category-select-label"
-                multiple
-                name="categories"
-                value={selectedCategories}
-                onChange={handleNewBookCategorySelect}
-                input={<OutlinedInput label="Chip"/>}
-                renderValue={(selected) => (
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                    {selected.map((value) => {
-                      const category = categories.find((cat) => cat.id === value);
-                      return <Chip key={value} label={category ? category.name : ''} /> 
-                    })}
-                  </Box>
-                )}
-                MenuProps={MenuProps}
-              >
-                {categories.map((category, index) => (
-                  <MenuItem
-                    key={`${index}category`}
-                    value={category.id}
-                    style={getStyles(category.name, selectedCategories, theme)}
-                  >
-                    {category.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
-          <Button color="secondary" variant="contained" onClick={handleAddBook}>Create</Button>
-        </div>
         <div className="updateBook">
           <h3>Update Book</h3>
           <Box
@@ -456,36 +357,7 @@ function Books() {
                 ))}
               </Select>
             </FormControl>
-            <FormControl sx={{ m: 1, width: 300}}>
-              <InputLabel id="category-select-label">Category</InputLabel>
-              <Select
-                labelId="category-select-label"
-                multiple
-                name="categories"
-                value={selectedCategories}
-                onChange={handleUpdateBookCategorySelect}
-                input={<OutlinedInput label="Chip"/>}
-                renderValue={(selected) => (
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                    {selected.map((value) => {
-                      const category = categories.find((cat) => cat.id === value);
-                      return <Chip key={value} label={category ? category.name : ''} /> 
-                    })}
-                  </Box>
-                )}
-                MenuProps={MenuProps}
-              >
-                {categories.map((category, index) => (
-                  <MenuItem
-                    key={`${index}category`}
-                    value={category.id}
-                    style={getStyles(category.name, selectedCategories, theme)}
-                  >
-                    {category.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            
           </Box>
           <Button color="secondary" variant="contained" onClick={handleUpdateBook}>Create</Button>
         </div>
