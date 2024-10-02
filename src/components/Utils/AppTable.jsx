@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import AppButton from "../Utils/AppButton";
 import { Box } from '@mui/material';
+import Chip from '@mui/material/Chip';
 
 function AppTable({ keyItem, list, updateFunc, deleteFunc }) {
   return (
@@ -19,7 +20,7 @@ function AppTable({ keyItem, list, updateFunc, deleteFunc }) {
               <TableCell 
                 id='header-cell' 
                 key={key} 
-                sx={{ flexGrow: 1, textAlign: 'left', width: '25%' }} // Ensures equal width for each content column
+                sx={{ flexGrow: 1, textAlign: 'left', width: '15%' }}
               >
                 {key}
               </TableCell>
@@ -30,15 +31,27 @@ function AppTable({ keyItem, list, updateFunc, deleteFunc }) {
         <TableBody>
           {list.map((prop, index) => (
             <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              {Object.keys(keyItem).map((key) => (
-                <TableCell 
-                  id='body-cell' 
-                  key={key} 
-                  sx={{ flexGrow: 1, textAlign: 'left', width: '25%' }}
-                >
-                  {prop[key]}
-                </TableCell>
-              ))}
+              {Object.keys(keyItem).map((key) => {
+                if (key === "categories") {
+                  return (
+                    <TableCell key={key}>{prop[key].map((category, index) => 
+                      { return (
+                        <Chip key={`${index}-${category}`} label={category.name} />
+                      )})}
+                    </TableCell>
+                  )
+                } else {
+                  return (
+                    <TableCell 
+                      id='body-cell' 
+                      key={key} 
+                      sx={{ flexGrow: 1, textAlign: 'left', width: '15%' }}
+                    >
+                      {typeof prop[key] === "object" ? prop[key].name : prop[key]}
+                    </TableCell>
+                  )
+                }
+              })}
               <TableCell id='action-cell' sx={{ width: 300, textAlign: 'center' }}>
                 <Box id='action-buttons'>
                   <AppButton
