@@ -1,0 +1,6 @@
+#app-button, .button-container button {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-radius: 0.8rem;
+}
+
