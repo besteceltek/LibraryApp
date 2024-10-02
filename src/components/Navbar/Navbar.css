@@ -24,13 +24,13 @@
     align-items: center;
 }
 
-ul {
+.toolbar ul {
     padding: 0;
     display: flex;
     list-style: none;
 }
 
-li {
+.toolbar ul li {
     position: relative;
     cursor: pointer;
     font-size: 0.875rem;
