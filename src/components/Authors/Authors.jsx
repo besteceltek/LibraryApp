@@ -95,6 +95,7 @@ function Authors() {
   }
 
   const handleUpdateAuthorBtn = (author) => {
+    handleModalOpen()
     setUpdateAuthor(author)
   }
 
@@ -114,7 +115,7 @@ function Authors() {
       <AddModal
         dialogContent={
           <AuthorDialogContent 
-            publisherObject={newAuthor}
+            authorObject={newAuthor}
             inputChangeFunction={handleNewAuthorInputChange}
           />
         }
@@ -124,7 +125,7 @@ function Authors() {
       <UpdateModal
         dialogContent={
           <AuthorDialogContent 
-            publisherObject={updateAuthor}
+            authorObject={updateAuthor}
             inputChangeFunction={handleUpdateAuthorInputChange}
           />
         }
