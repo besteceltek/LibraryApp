@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import axios from "axios"
 import { UpdatePageContext } from "../../context/UpdatePageProvider"
-import BookTable from "./BookTable";
+import AppTable from "../Utils/AppTable";
 
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -439,7 +439,7 @@ function Books() {
             <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
               <InputLabel id="publisher-select-label">Publisher</InputLabel>
               <Select
-                labelId="publisherSelect"
+                labelId="publisher-select-label"
                 defaultValue={0}
                 value={updateBook.publisher.name}
                 label="Publisher"
@@ -490,12 +490,12 @@ function Books() {
           <Button color="secondary" variant="contained" onClick={handleUpdateBook}>Create</Button>
         </div>
       </div>
-      <h1>Books</h1>
-      <BookTable 
-        books={books}
-        newBook={newBook}
-        handleUpdateBookBtn={handleUpdateBookBtn}
-        handleDeleteBook={handleDeleteBook}
+      <h1 style={{ color: 'var(--text-color)'}}>Authors</h1>
+      <AppTable
+        keyItem={newBook}
+        list={books}
+        updateFunc={handleUpdateBookBtn}
+        deleteFunc={handleDeleteBook}
       />
     </div>
   )
