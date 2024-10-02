@@ -5,31 +5,32 @@ function AuthorDialogContent({ authorObject, inputChangeFunction }) {
   return (
     <DialogContent id='content'>
       <TextField
+        autoFocus
         required
         label="Name"
         name="name"
-        defaultValue={0}
         value={authorObject.name}
         size="small"
         onChange={inputChangeFunction}
+        autoComplete='false'
       />
       <TextField
         required
         label="Country"
         name="country"
-        defaultValue={""}
         value={authorObject.country}
         size="small"
         onChange={inputChangeFunction}
+        autoComplete='false'
       />
       <TextField
         required
         label="Birth Date"
         name="birthDate"
-        defaultValue={""}
         value={authorObject.birthDate}
         size="small"
         onChange={inputChangeFunction}
+        autoComplete='false'
       />
     </DialogContent>
   )
