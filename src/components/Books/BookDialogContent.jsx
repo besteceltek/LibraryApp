@@ -45,73 +45,45 @@ function BookDialogContent(
 
   return (
     <DialogContent id='content'>
-    
-      <TextField
-        autoFocus
-        required
-        label="Name"
-        name="name"
-        value={bookObject.name}
-        size="small"
-        onChange={inputChangeFunction}
-        autoComplete='false'
-      />
-      <TextField
-        required
-        label="Publication Year"
-        name="publicationYear"
-        value={bookObject.publicationYear}
-        size="small"
-        onChange={inputChangeFunction}
-        autoComplete='false'
-      />
-      <TextField
-        required
-        label="Stock"
-        name="stock"
-        value={bookObject.stock}
-        size="small"
-        onChange={inputChangeFunction}
-        autoComplete='false'
-      />
-      <FormControl sx={{ minWidth: 120 }} size="small">
-        <InputLabel id="author-select-label">Author</InputLabel>
-        <Select
-          labelId="author-select-label"
-          value={bookObject.author?.name}
-          label="Author"
-          name="author"
-          onChange={handleNewBookAuthorSelect}
-        >
-          {authors?.map((author, index) => (
-            <MenuItem 
-              key={`${index}author`} 
-              value={author.id}
+    {Object.keys(bookObject).map((key) => {
+      if (key === "name" || key === "publicationYear" || key === "stock") {
+        return (
+          <TextField
+            required
+            label={key.charAt(0).toUpperCase() + key.slice(1)}
+            name={key}
+            value={bookObject.key}
+            size="small"
+            onChange={inputChangeFunction}
+            autoComplete='false'
+          />
+        )
+      } else if (key === "author" || key === "publisher") {
+        return (
+          <FormControl size="small">
+            <InputLabel id={`${key}-select-label`}>
+              {key.charAt(0).toUpperCase() + key.slice(1)}
+            </InputLabel>
+            <Select
+              labelId={`${key}-select-label`}
+              value={bookObject[key].name}
+              label={key.charAt(0).toUpperCase() + key.slice(1)}
+              name={key}
+              onChange={key === "author" ? handleNewBookAuthorSelect : handleNewBookPublisherSelect}
             >
-              {author.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl sx={{ minWidth: 120 }} size="small">
-        <InputLabel id="publisher-select-label">Publisher</InputLabel>
-        <Select
-          labelId="publisher-select-label"
-          value={bookObject.publisher.name}
-          label="Publisher"
-          name="publisher"
-          onChange={handleNewBookPublisherSelect}
-        >
-          {publishers?.map((publisher, index) => (
-            <MenuItem
-              key={`${index}publisher`}
-              value={publisher.id}
-            >
-              {publisher.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+              {(key === "author" ? authors : publishers).map((prop, index) => (
+                <MenuItem 
+                  key={index-prop} 
+                  value={prop.id}
+                >
+                  {prop.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )
+      }
+    })}
       <FormControl sx={{ width: 300}} size="small">
         <InputLabel id="category-select-label">Category</InputLabel>
         <Select
