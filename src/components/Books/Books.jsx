@@ -3,22 +3,8 @@ import axios from "axios"
 import { UpdatePageContext } from "../../context/UpdatePageProvider"
 import AppTable from "../Utils/AppTable";
 import AddModal from "../Utils/AddUpdateModals/AddModal";
-
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Chip from '@mui/material/Chip';
-
+import UpdateModal from "../Utils/AddUpdateModals/UpdateModal";
 import BookDialogContent from "./BookDialogContent";
-
-
-
-
 
 function Books() {
   
@@ -82,6 +68,16 @@ function Books() {
       ]
     }
   )
+
+  const [updateModalOpen, setUpdateModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setUpdateModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setUpdateModalOpen(false);
+  };
 
   useEffect(() => {
     axios.get(import.meta.env.VITE_APP_BASE_URL + "/api/v1/books")
@@ -186,6 +182,7 @@ function Books() {
   }
 
   const handleUpdateBookBtn = (book) => {
+    handleModalOpen()
     setUpdateBook(book)
   }
 
@@ -268,101 +265,39 @@ function Books() {
         dialogContent={
           <BookDialogContent 
             bookObject={newBook}
-            inputChangeFunction={handleNewBookInputChange}
-            handleNewBookAuthorSelect={handleNewBookAuthorSelect}
             authors={authors}
-            handleNewBookPublisherSelect={handleNewBookPublisherSelect}
             publishers={publishers}
             selectedCategories={selectedCategories}
-            handleNewBookCategorySelect={handleNewBookCategorySelect}
             categories={categories}
+            inputChangeFunction={handleNewBookInputChange}
+            handleAuthorSelect={handleNewBookAuthorSelect}
+            handlePublisherSelect={handleNewBookPublisherSelect}
+            handleCategorySelect={handleNewBookCategorySelect}
           />
         }
         prop="Book"
         addFunction={handleAddBook} 
       />
-      <div className="bookInputs">
-        <div className="updateBook">
-          <h3>Update Book</h3>
-          <Box
-            className="bookForm"
-            component="form"
-            noValidate
-            autoComplete="off"
-          >
-            <TextField
-              required
-              label="Name"
-              name="name"
-              defaultValue={0}
-              value={updateBook.name}
-              size="small"
-              onChange={handleUpdateBookInputChange}
-            />
-            <TextField
-              required
-              label="Publication Year"
-              name="publicationYear"
-              defaultValue={0}
-              value={updateBook.publicationYear}
-              size="small"
-              onChange={handleUpdateBookInputChange}
-            />
-            <TextField
-              required
-              label="Stock"
-              name="stock"
-              defaultValue={0}
-              value={updateBook.stock}
-              size="small"
-              onChange={handleUpdateBookInputChange}
-            />
-            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-              <InputLabel id="author-select-label">Author</InputLabel>
-              <Select
-                labelId="author-select-label"
-                defaultValue={0}
-                value={updateBook.author.name}
-                label="Author"
-                name="author"
-                onChange={handleUpdateBookAuthorSelect}
-              >
-                {authors?.map((author, index) => (
-                  <MenuItem 
-                    key={`${index}author`} 
-                    value={author.id}
-                  >
-                    {author.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-              <InputLabel id="publisher-select-label">Publisher</InputLabel>
-              <Select
-                labelId="publisher-select-label"
-                defaultValue={0}
-                value={updateBook.publisher.name}
-                label="Publisher"
-                name="publisher"
-                onChange={handleUpdateBookPublisherSelect}
-              >
-                {publishers?.map((publisher, index) => (
-                  <MenuItem 
-                    key={`${index}publisher`} 
-                    value={publisher.id}
-                  >
-                    {publisher.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            
-          </Box>
-          <Button color="secondary" variant="contained" onClick={handleUpdateBook}>Create</Button>
-        </div>
-      </div>
-      <h1 style={{ color: 'var(--text-color)'}}>Authors</h1>
+      <UpdateModal
+        dialogContent={
+          <BookDialogContent
+            bookObject={updateBook}
+            authors={authors}
+            publishers={publishers}
+            selectedCategories={updatedCategories}
+            categories={categories}
+            inputChangeFunction={handleUpdateBookInputChange}
+            handleAuthorSelect={handleUpdateBookAuthorSelect}
+            handlePublisherSelect={handleUpdateBookPublisherSelect}
+            handleCategorySelect={handleUpdateBookCategorySelect}
+          />
+        }
+        prop="Book"
+        updateFunction={handleUpdateBook}
+        updateModalOpen={updateModalOpen}
+        handleModalClose={handleModalClose}
+      />
+      <h1 style={{ color: 'var(--text-color)'}}>Books</h1>
       <AppTable
         keyItem={newBook}
         list={books}
