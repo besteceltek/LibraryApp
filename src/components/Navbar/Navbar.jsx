@@ -1,37 +1,35 @@
-import { useContext } from "react"
-import { ActivePageContext } from '../../context/ActivePageProvider'
-
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 
-function Navbar() {
-  const { setActivePage } = useContext(ActivePageContext)
+import { Link } from "react-router-dom";
+import './Navbar.css'
 
-  const pages = ['Dashboard', 'Books', 'Authors', 'Categories', 'Publishers', 'Borrows'];
+function Navbar() {
+
+  const pages = ['Books', 'Authors', 'Categories', 'Publishers', 'Borrows', 'Dashboard'];
 
   return (
-    <div className="navbar">
-      <AppBar position="static" color="secondary" sx={{ borderRadius: "1.5rem"}}>
-        <Container>
-          <Toolbar>
-            <Box sx={{ display: { md: 'flex' } }}>
+    <nav className="navbar">
+      <div className="appbar">
+        <div className="container">
+          <div className="toolbar">
+            <ul>
+              <li key="Home">
+                <Link to="/">Home</Link>
+              </li>
               {pages.map((page) => (
-                <Button
-                  key={page}
-                  sx={{ color: '#F4F5F6', display: 'block' }}
-                  onClick={() => setActivePage(page)}
-                >
-                  {page}
-                </Button>
+                <li key={page}>
+                  <Link to={`/${page.toLowerCase()}`}>{page}</Link>
+                </li>
               ))}
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-    </div>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
   )
 }
 
