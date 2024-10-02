@@ -1,0 +1,21 @@
+#modal form {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-weight: 700;
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 10px;
+}
+
+#actions {
+    justify-content: center;
+}
+
+.add-button button {
+    position: absolute;
+    right: 100px;
+}
