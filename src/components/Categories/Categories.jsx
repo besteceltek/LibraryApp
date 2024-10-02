@@ -1,11 +1,11 @@
 import { useEffect, useState, useContext } from "react"
 import { UpdatePageContext } from '../../context/UpdatePageProvider'
 import axios from "axios"
-import CategoryTable from "./CategoryTable"
+import AddModal from "../AddUpdateModals/AddModal";
+import UpdateModal from "../AddUpdateModals/UpdateModal";
+import CategoryDialogContent from "./CategoryDialogContent";
+import AppTable from "../Utils/AppTable";
 
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 
 function Categories() {
   const [categories, setCategories] = useState([])
@@ -23,6 +23,16 @@ function Categories() {
       description: ""
     }
   )
+
+  const [updateModalOpen, setUpdateModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setUpdateModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setUpdateModalOpen(false);
+  };
 
   useEffect(() => {
     axios.get(import.meta.env.VITE_APP_BASE_URL + "/api/v1/categories")
@@ -51,6 +61,9 @@ function Categories() {
         }
       )
     })
+    .catch((err) => {
+      console.log(err)
+    })
   }
 
   const handleDeleteCategory = (e) => {
@@ -62,6 +75,8 @@ function Categories() {
 
   const handleUpdateCategoryBtn = (category) => {
     setUpdateCategory(category)
+    handleModalOpen()
+    console.log(updateCategory)
   }
 
   const handleUpdateCategoryInputChange = (e) => {
@@ -91,70 +106,34 @@ function Categories() {
 
   return (
     <div>
-      <div className="categoryInputs">
-        <div className="addCategory">
-          <h3>New Category</h3>
-          <Box
-            className="categoryForm"
-            component="form"
-            noValidate
-            autoComplete="off"
-          >
-            <TextField
-              required
-              label="Name"
-              name="name"
-              defaultValue={newCategory.name}
-              size="small"
-              onChange={handleNewCategoryInputChange}
-            />
-            <TextField
-              required
-              label="Description"
-              name="description"
-              defaultValue={newCategory.description}
-              size="small"
-              onChange={handleNewCategoryInputChange}
-            />
-          </Box>
-          <Button color="secondary" variant="contained" onClick={handleAddCategory}>Create</Button>
-        </div>
-        <div className="updateCategory">
-          <h3>Update Category</h3>
-          <Box
-            className="categoryForm"
-            component="form"
-            noValidate
-            autoComplete="off"
-          >
-            <TextField
-              required
-              label="Name"
-              name="name"
-              defaultValue={0}
-              value={updateCategory.name}
-              size="small"
-              onChange={handleUpdateCategoryInputChange}
-            />
-            <TextField
-              required
-              label="Description"
-              name="description"
-              defaultValue={0}
-              value={updateCategory.description}
-              size="small"
-              onChange={handleUpdateCategoryInputChange}
-            />
-          </Box>
-          <Button color="secondary" variant="contained" onClick={handleUpdateCategory}>Update</Button>
-        </div>
-      </div>
-      <h1>Categories</h1>
-      <CategoryTable 
-        categories= {categories}
-        newCategory= {newCategory}
-        handleUpdateCategoryBtn= {handleUpdateCategoryBtn}
-        handleDeleteCategory= {handleDeleteCategory}
+      <AddModal
+        dialogContent={
+          <CategoryDialogContent 
+            categoryObject={newCategory}
+            inputChangeFunction={handleNewCategoryInputChange}
+          />
+        }
+        prop="Category"
+        addFunction={handleAddCategory} 
+      />
+      <UpdateModal 
+        dialogContent={
+          <CategoryDialogContent 
+            categoryObject={updateCategory}
+            inputChangeFunction={handleUpdateCategoryInputChange}
+          />
+        }
+        prop="Category"
+        updateFunction={handleUpdateCategory}
+        updateModalOpen={updateModalOpen}
+        handleModalClose={handleModalClose}
+      />
+      <h1 style={{ color: 'var(--text-color)'}}>Categories</h1>
+      <AppTable
+        keyItem={newCategory}
+        list={categories}
+        updateFunc={handleUpdateCategoryBtn}
+        deleteFunc={handleDeleteCategory}
       />
     </div>
   )
