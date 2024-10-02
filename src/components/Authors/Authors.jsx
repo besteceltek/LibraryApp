@@ -2,11 +2,10 @@ import { useEffect, useState, useContext } from 'react'
 import { UpdatePageContext } from '../../context/UpdatePageProvider'
 import { LoadingContext } from '../../context/LoadingProvider'
 import axios from "axios"
-import AuthorTable from './AuthorTable'
-
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import AuthorDialogContent from './AuthorDialogContent'
+import AddModal from '../AddUpdateModals/AddModal'
+import UpdateModal from '../AddUpdateModals/UpdateModal'
+import AppTable from '../Utils/AppTable'
 
 function Authors() {
   const [authors, setAuthors] = useState([])
@@ -27,6 +26,16 @@ function Authors() {
   )
   const { updatePage, setUpdatePage } = useContext(UpdatePageContext)
   const { loading, setLoading } = useContext(LoadingContext)
+
+  const [updateModalOpen, setUpdateModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setUpdateModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setUpdateModalOpen(false);
+  };
 
   useEffect(() => {
     axios.get(import.meta.env.VITE_APP_BASE_URL + "/api/v1/authors")
@@ -89,95 +98,49 @@ function Authors() {
     setUpdateAuthor(author)
   }
 
+  const handleDeleteAuthor = (e) => {
+    axios.delete(import.meta.env.VITE_APP_BASE_URL + "/api/v1/authors/" + e.target.id)
+    .then(() => {
+      setUpdatePage(true)
+    })
+  }
+
   if (loading) {
     return <div>Loading...</div>
   }
 
   return (
-    <>
-    <div className='authorInputs'>
-      <div className='addAuthor'>
-        <h3>New Author</h3>
-        <Box
-          className="authorForm"
-          component="form"
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            required
-            label="Name"
-            name="name"
-            defaultValue={newAuthor.name}
-            size="small"
-            onChange={handleNewAuthorInputChange}
+    <div>
+      <AddModal
+        dialogContent={
+          <AuthorDialogContent 
+            publisherObject={newAuthor}
+            inputChangeFunction={handleNewAuthorInputChange}
           />
-          <TextField
-            required
-            label="Country"
-            name="country"
-            defaultValue={newAuthor.description}
-            size="small"
-            onChange={handleNewAuthorInputChange}
+        }
+        prop="Author"
+        addFunction={handleAddAuthor} 
+      />
+      <UpdateModal
+        dialogContent={
+          <AuthorDialogContent 
+            publisherObject={updateAuthor}
+            inputChangeFunction={handleUpdateAuthorInputChange}
           />
-          <TextField
-            required
-            label="Birth Date"
-            name="birthDate"
-            defaultValue={newAuthor.address}
-            size="small"
-            onChange={handleNewAuthorInputChange}
-          />
-        </Box>
-        <Button color="secondary" variant="contained" onClick={handleAddAuthor}>Create</Button>
-      </div>
-      <div className='updateAuthor'>
-        <h3>Update Author</h3>
-        <Box
-          className="authorForm"
-          component="form"
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            required
-            label="Name"
-            name="name"
-            defaultValue={0}
-            value={updateAuthor.name}
-            size="small"
-            onChange={handleUpdateAuthorInputChange}
-          />
-          <TextField
-            required
-            label="Country"
-            name="country"
-            defaultValue={""}
-            value={updateAuthor.country}
-            size="small"
-            onChange={handleUpdateAuthorInputChange}
-          />
-          <TextField
-            required
-            label="Birth Date"
-            name="birthDate"
-            defaultValue={""}
-            value={updateAuthor.birthDate}
-            size="small"
-            onChange={handleUpdateAuthorInputChange}
-          />
-        </Box>
-        <Button color="secondary" variant="contained" onClick={handleUpdateAuthor}>Update</Button>
-      </div>
+        }
+        prop="Author"
+        updateFunction={handleUpdateAuthor}
+        updateModalOpen={updateModalOpen}
+        handleModalClose={handleModalClose}
+      />
+      <h1 style={{ color: 'var(--text-color)'}}>Authors</h1>
+      <AppTable
+        keyItem={newAuthor}
+        list={authors}
+        updateFunc={handleUpdateAuthorBtn}
+        deleteFunc={handleDeleteAuthor}
+      />
     </div>
-    <br />
-    <h1>Authors</h1>
-    <AuthorTable
-      authors={authors}
-      newAuthor={newAuthor}
-      handleUpdateAuthorBtn={handleUpdateAuthorBtn}
-    />
-    </>
   )
 }
 
