@@ -1,11 +1,11 @@
 import { useEffect, useState, useContext } from 'react'
 import { UpdatePageContext } from '../../context/UpdatePageProvider'
 import axios from "axios"
+import PublisherDialogContent from './PublisherDialogContent'
 import PublisherTable from './PublisherTable'
-
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import AddModal from '../AddUpdateModals/AddModal'
+import UpdateModal from '../AddUpdateModals/UpdateModal'
+import AppTable from '../Utils/AppTable'
 
 function Publishers() {
   const [publishers, setPublishers] = useState([])
@@ -25,6 +25,16 @@ function Publishers() {
     }
   )
   const { updatePage, setUpdatePage } = useContext(UpdatePageContext)
+
+  const [updateModalOpen, setUpdateModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setUpdateModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setUpdateModalOpen(false);
+  };
 
   useEffect(() => {
     axios.get(import.meta.env.VITE_APP_BASE_URL + "/api/v1/publishers")
@@ -75,6 +85,7 @@ function Publishers() {
   }
 
   const handleUpdatePublisherBtn = (publisher) => {
+    handleModalOpen()
     setUpdatePublisher(publisher)
   }
 
@@ -95,87 +106,34 @@ function Publishers() {
 
   return (
     <div>
-      <div className="publisherInputs">
-        <div className='addPublisher'>
-          <h3>New Publisher</h3>
-          <Box
-            className="publisherForm"
-            component="form"
-            noValidate
-            autoComplete="off"
-          >
-            <TextField
-              required
-              label="Name"
-              name="name"
-              defaultValue={""}
-              size="small"
-              onChange={handleNewPublisherInputChange}
-            />
-            <TextField
-              required
-              label="Establishment Year"
-              name="establishmentYear"
-              defaultValue={""}
-              size="small"
-              onChange={handleNewPublisherInputChange}
-            />
-            <TextField
-              required
-              label="Address"
-              name="address"
-              defaultValue={""}
-              size="small"
-              onChange={handleNewPublisherInputChange}
-            />
-          </Box>
-          <Button color="secondary" variant="contained" onClick={handleAddPublisher}>Create</Button>
-        </div>
-        <div className='updatePublisher'>
-          <h3>New Publisher</h3>
-          <Box
-            className="publisherForm"
-            component="form"
-            noValidate
-            autoComplete="off"
-          >
-            <TextField
-              required
-              label="Name"
-              name="name"
-              defaultValue={""}
-              value={updatePublisher.name}
-              size="small"
-              onChange={handleUpdatePublisherInputChange}
-            />
-            <TextField
-              required
-              label="Establishment Year"
-              name="establishmentYear"
-              defaultValue={""}
-              value={updatePublisher.establishmentYear}
-              size="small"
-              onChange={handleUpdatePublisherInputChange}
-            />
-            <TextField
-              required
-              label="Address"
-              name="address"
-              defaultValue={""}
-              value={updatePublisher.address}
-              size="small"
-              onChange={handleUpdatePublisherInputChange}
-            />
-          </Box>
-          <Button color="secondary" variant="contained" onClick={handleUpdatePublisher}>Update</Button>
-        </div>
-      </div>
-      <h1>Publishers</h1>
-      <PublisherTable
-        publishers={publishers}
-        newPublisher={newPublisher}
-        handleUpdatePublisherBtn={handleUpdatePublisherBtn}
-        handleDeletePublisher={handleDeletePublisher}
+      <AddModal
+        dialogContent={
+          <PublisherDialogContent 
+            publisherObject={newPublisher}
+            inputChangeFunction={handleNewPublisherInputChange}
+          />
+        }
+        prop="Publisher"
+        addFunction={handleAddPublisher} 
+      />
+      <UpdateModal
+        dialogContent={
+          <PublisherDialogContent 
+            publisherObject={updatePublisher}
+            inputChangeFunction={handleUpdatePublisherInputChange}
+          />
+        }
+        prop="Publisher"
+        updateFunction={handleUpdatePublisher}
+        updateModalOpen={updateModalOpen}
+        handleModalClose={handleModalClose}
+      />
+      <h1 style={{ color: 'var(--text-color)'}}>Publishers</h1>
+      <AppTable
+        keyItem={newPublisher}
+        list={publishers}
+        updateFunc={handleUpdatePublisherBtn}
+        deleteFunc={handleDeletePublisher}
       />
     </div>
   )
