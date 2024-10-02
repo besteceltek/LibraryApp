@@ -2,8 +2,8 @@ import { useEffect, useState, useContext } from 'react'
 import { UpdatePageContext } from '../../context/UpdatePageProvider'
 import axios from "axios"
 import PublisherDialogContent from './PublisherDialogContent'
-import AddModal from '../AddUpdateModals/AddModal'
-import UpdateModal from '../AddUpdateModals/UpdateModal'
+import AddModal from '../Utils/AddUpdateModals/AddModal'
+import UpdateModal from '../Utils/AddUpdateModals/UpdateModal'
 import AppTable from '../Utils/AppTable'
 
 function Publishers() {

@@ -3,8 +3,8 @@ import { UpdatePageContext } from '../../context/UpdatePageProvider'
 import { LoadingContext } from '../../context/LoadingProvider'
 import axios from "axios"
 import AuthorDialogContent from './AuthorDialogContent'
-import AddModal from '../AddUpdateModals/AddModal'
-import UpdateModal from '../AddUpdateModals/UpdateModal'
+import AddModal from '../Utils/AddUpdateModals/AddModal'
+import UpdateModal from '../Utils/AddUpdateModals/UpdateModal'
 import AppTable from '../Utils/AppTable'
 
 function Authors() {
