@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import './Modal.css'
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
