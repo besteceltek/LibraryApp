@@ -32,12 +32,12 @@ function BookDialogContent(
   { 
     bookObject, 
     inputChangeFunction, 
-    handleNewBookAuthorSelect, 
+    handleAuthorSelect, 
     authors, 
-    handleNewBookPublisherSelect,
+    handlePublisherSelect,
     publishers,
     selectedCategories,
-    handleNewBookCategorySelect,
+    handleCategorySelect,
     categories
   }
 ) {
@@ -49,10 +49,11 @@ function BookDialogContent(
       if (key === "name" || key === "publicationYear" || key === "stock") {
         return (
           <TextField
+            key={`book-${key}-input`}
             required
             label={key.charAt(0).toUpperCase() + key.slice(1)}
             name={key}
-            value={bookObject.key}
+            value={bookObject[key]}
             size="small"
             onChange={inputChangeFunction}
             autoComplete='false'
@@ -60,20 +61,20 @@ function BookDialogContent(
         )
       } else if (key === "author" || key === "publisher") {
         return (
-          <FormControl size="small">
+          <FormControl key={`book-${key}-input`} size="small">
             <InputLabel id={`${key}-select-label`}>
               {key.charAt(0).toUpperCase() + key.slice(1)}
             </InputLabel>
             <Select
               labelId={`${key}-select-label`}
-              value={bookObject[key].name}
+              value={bookObject[key].id}
               label={key.charAt(0).toUpperCase() + key.slice(1)}
               name={key}
-              onChange={key === "author" ? handleNewBookAuthorSelect : handleNewBookPublisherSelect}
+              onChange={key === "author" ? handleAuthorSelect : handlePublisherSelect}
             >
               {(key === "author" ? authors : publishers).map((prop, index) => (
                 <MenuItem 
-                  key={index-prop} 
+                  key={`book-${key}-menu-item-${index}`} 
                   value={prop.id}
                 >
                   {prop.name}
@@ -91,7 +92,7 @@ function BookDialogContent(
           multiple
           name="categories"
           value={selectedCategories}
-          onChange={handleNewBookCategorySelect}
+          onChange={handleCategorySelect}
           input={<OutlinedInput label="Category"/>}
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
