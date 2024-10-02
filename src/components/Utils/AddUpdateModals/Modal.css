@@ -19,3 +19,8 @@
     position: absolute;
     right: 100px;
 }
+
+.MuiMenu-list {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
