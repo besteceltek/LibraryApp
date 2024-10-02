@@ -1,9 +1,11 @@
 :root {
-  --primary-color: #3D707F;
-  --secondary-color: #F4F5F6;
-  --main-color: #FF6F3C;
+  --primary-color: #BDBAAA;
+  --secondary-color: #E5E3D6;
+  --main-color: #3D707F;
+  --text-color: #342e2e;
 
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1rem;
+  letter-spacing: 0.03em;
 }

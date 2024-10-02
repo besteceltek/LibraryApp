@@ -1,5 +1,5 @@
 #app-button, .button-container button {
-    background-color: var(--primary-color);
+    background-color: var(--main-color);
     color: var(--secondary-color);
     border-radius: 0.8rem;
 }

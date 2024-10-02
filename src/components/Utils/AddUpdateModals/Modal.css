@@ -1,5 +1,5 @@
 #modal form {
-    background-color: var(--background-color);
+    background-color: var(--primary-color);
     color: var(--text-color);
     font-weight: 700;
 }
