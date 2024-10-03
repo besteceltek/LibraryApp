@@ -8,6 +8,7 @@
 }
 
 body {
+  max-width: 1200px;
   margin: 20px;
   background-color: var(--primary-color);
 }
