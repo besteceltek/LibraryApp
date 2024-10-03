@@ -1,29 +1,55 @@
 import { useContext, useEffect, useState } from "react"
 import axios from "axios"
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import { UpdatePageContext } from "../../context/UpdatePageProvider"
-import BorrowsTable from "./BorrowsTable";
+import AppTable from "../Utils/AppTable";
+import AddModal from "../Utils/AddUpdateModals/AddModal";
+import UpdateModal from "../Utils/AddUpdateModals/UpdateModal";
+import AddBorrowDialogContent from "./AddBorrowDialogContent";
+import UpdateBorrowDialogContent from "./UpdateBorrowDialogContent";
 
 function Borrows() {
+  const borrowForKeys = {
+    borrowerName: "",
+    borrowerMail: "",
+    borrowingDate: "",
+    returnDate: "",
+    book: {}
+  }
   const [borrows, setBorrows] = useState([])
   const [books, setBooks] = useState([])
   const { updatePage, setUpdatePage } = useContext(UpdatePageContext)
   const [newBorrow, setNewBorrow] = useState(
     {
-      "borrowerName": "",
-      "borrowerMail": "",
-      "borrowingDate": "",
-      "bookForBorrowingRequest": {
-        "id": "",
-        "name": "",
-        "publicationYear": "",
-        "stock": ""
+      borrowerName: "",
+      borrowerMail: "",
+      borrowingDate: "",
+      returnDate: "",
+      bookForBorrowingRequest: {
+        id: "",
+        name: "",
+        publicationYear: "",
+        stock: ""
       }
     }
   )
+  const [updateBorrow, setUpdateBorrow] = useState(
+    {
+      id: "",
+      borrowerName: "",
+      borrowingDate: "",
+      returnDate: ""
+    }
+  )
+
+  const [updateModalOpen, setUpdateModalOpen] = useState(false);
+
+  const handleUpdateModalOpen = () => {
+    setUpdateModalOpen(true);
+  };
+
+  const handleUpdateModalClose = () => {
+    setUpdateModalOpen(false);
+  };
 
   useEffect(() => {
     axios.get(import.meta.env.VITE_APP_BASE_URL + "/api/v1/borrows")
@@ -77,78 +103,68 @@ function Borrows() {
     })
   }
 
-  const handleUpdateBorrowBtn = () => {}
-  const handleDeleteBorrow = () => {}
+  const handleDeleteBorrow = (e) => {
+    axios.delete(import.meta.env.VITE_APP_BASE_URL + "/api/v1/borrows/" + e.target.id)
+    .then(() => {
+      setUpdatePage()
+    })
+  }
 
-  console.log(newBorrow)
+  const handleUpdateBorrowBtn = (borrow) => {
+    handleUpdateModalOpen()
+    setUpdateBorrow(borrow)
+  }
+
+  const handleUpdateBorrowInputChange = (e) => {
+    const { name, value } = e.target
+    setUpdateBorrow((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleUpdateBorrow = () => {
+    axios.put(import.meta.env.VITE_APP_BASE_URL + "api/v1/borrows/" + updateBorrow.id, updateBorrow)
+    .then(() => {
+      setUpdatePage(true)
+    })
+  }
+  
+  
 
   return (
     <div>
-      <div className="borrow-inputs">
-        <div className="new-borrow">
-          <h3>New Book Borrowing</h3>
-          <input 
-            type="text"
-            placeholder='Name'
-            onChange={handleNewBorrowInputChange}
-            name='borrowerName'
-            value={newBorrow.borrowerName}
-            autoComplete='off' 
+      <AddModal
+        dialogContent={
+          <AddBorrowDialogContent
+            borrowObject={newBorrow}
+            books={books}
+            inputChangeFunction={handleNewBorrowInputChange}
+            handleBookSelect={handleNewBorrowBookSelect}
           />
-          <br />
-          <input 
-            type="text"
-            placeholder='Mail'
-            onChange={handleNewBorrowInputChange}
-            name='borrowerMail'
-            value={newBorrow.borrowerMail}
-            autoComplete='off' 
-          />
-          <br />
-          <input 
-            type="text"
-            placeholder='Borrow Date'
-            onChange={handleNewBorrowInputChange}
-            name='borrowingDate'
-            value={newBorrow.borrowingDate}
-            autoComplete='off' 
-          />
-          <br />
-          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-            <InputLabel id="book-select-label">Book</InputLabel>
-            <Select
-              labelId="book-select-label"
-              defaultValue={0}
-              label="Book"
-              name="bookForBorrowingRequest"
-              onChange={handleNewBorrowBookSelect}
-            >
-              {books?.map((book, index) => (
-                <MenuItem 
-                  key={`${index}book`} 
-                  value={book.id}
-                >
-                  {book.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <br />
-          <button onClick={handleAddBorrow}>Gönder</button>
-        </div>
-      </div>
-      <h1>Book Borrows</h1>
-      <BorrowsTable
-        borrows={borrows}
-        newBorrow={newBorrow}
-        handleUpdateBorrowBtn={handleUpdateBorrowBtn}
-        handleDeleteBorrow={handleDeleteBorrow}
+        }
+        prop="Borrow"
+        addFunction={handleAddBorrow}
       />
-      {borrows.map((borrow, index) => (
-        <div key={index}>
-          <p>{index + 1} - {borrow.borrowerName} - {borrow.book.name}</p>
-        </div>
-      ))}
+      <UpdateModal
+        dialogContent={
+          <UpdateBorrowDialogContent
+            borrowObject={updateBorrow}
+            inputChangeFunction={handleUpdateBorrowInputChange}
+          />
+        }
+        prop="Borrow"
+        updateFunction={handleUpdateBorrow}
+        updateModalOpen={updateModalOpen}
+        handleModalClose={handleUpdateModalClose}
+      />
+      <h1 style={{ color: 'var(--text-color)'}}>Book Borrows</h1>
+      <AppTable
+        keyItem={borrowForKeys}
+        list={borrows}
+        updateFunc={handleUpdateBorrowBtn}
+        deleteFunc={handleDeleteBorrow}
+      />
     </div>
   )
 }
