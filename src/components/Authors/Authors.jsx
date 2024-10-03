@@ -29,11 +29,11 @@ function Authors() {
 
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
 
-  const handleModalOpen = () => {
+  const handleUpdateModalOpen = () => {
     setUpdateModalOpen(true);
   };
 
-  const handleModalClose = () => {
+  const handleUpdateModalClose = () => {
     setUpdateModalOpen(false);
   };
 
@@ -95,7 +95,7 @@ function Authors() {
   }
 
   const handleUpdateAuthorBtn = (author) => {
-    handleModalOpen()
+    handleUpdateModalOpen()
     setUpdateAuthor(author)
   }
 
@@ -132,7 +132,7 @@ function Authors() {
         prop="Author"
         updateFunction={handleUpdateAuthor}
         updateModalOpen={updateModalOpen}
-        handleModalClose={handleModalClose}
+        handleModalClose={handleUpdateModalClose}
       />
       <h1 style={{ color: 'var(--text-color)'}}>Authors</h1>
       <AppTable

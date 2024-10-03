@@ -26,11 +26,11 @@ function Categories() {
 
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
 
-  const handleModalOpen = () => {
+  const handleUpdateModalOpen = () => {
     setUpdateModalOpen(true);
   };
 
-  const handleModalClose = () => {
+  const handleUpdateModalClose = () => {
     setUpdateModalOpen(false);
   };
 
@@ -75,7 +75,7 @@ function Categories() {
 
   const handleUpdateCategoryBtn = (category) => {
     setUpdateCategory(category)
-    handleModalOpen()
+    handleUpdateModalOpen()
     console.log(updateCategory)
   }
 
@@ -126,7 +126,7 @@ function Categories() {
         prop="Category"
         updateFunction={handleUpdateCategory}
         updateModalOpen={updateModalOpen}
-        handleModalClose={handleModalClose}
+        handleModalClose={handleUpdateModalClose}
       />
       <h1 style={{ color: 'var(--text-color)'}}>Categories</h1>
       <AppTable

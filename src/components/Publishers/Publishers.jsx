@@ -27,11 +27,11 @@ function Publishers() {
 
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
 
-  const handleModalOpen = () => {
+  const handleUpdateModalOpen = () => {
     setUpdateModalOpen(true);
   };
 
-  const handleModalClose = () => {
+  const handleUpdateModalClose = () => {
     setUpdateModalOpen(false);
   };
 
@@ -84,7 +84,7 @@ function Publishers() {
   }
 
   const handleUpdatePublisherBtn = (publisher) => {
-    handleModalOpen()
+    handleUpdateModalOpen()
     setUpdatePublisher(publisher)
   }
 
@@ -125,7 +125,7 @@ function Publishers() {
         prop="Publisher"
         updateFunction={handleUpdatePublisher}
         updateModalOpen={updateModalOpen}
-        handleModalClose={handleModalClose}
+        handleModalClose={handleUpdateModalClose}
       />
       <h1 style={{ color: 'var(--text-color)'}}>Publishers</h1>
       <AppTable

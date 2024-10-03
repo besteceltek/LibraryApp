@@ -71,11 +71,11 @@ function Books() {
 
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
 
-  const handleModalOpen = () => {
+  const handleUpdateModalOpen = () => {
     setUpdateModalOpen(true);
   };
 
-  const handleModalClose = () => {
+  const handleUpdateModalClose = () => {
     setUpdateModalOpen(false);
   };
 
@@ -182,7 +182,7 @@ function Books() {
   }
 
   const handleUpdateBookBtn = (book) => {
-    handleModalOpen()
+    handleUpdateModalOpen()
     setUpdateBook(book)
   }
 
@@ -295,7 +295,7 @@ function Books() {
         prop="Book"
         updateFunction={handleUpdateBook}
         updateModalOpen={updateModalOpen}
-        handleModalClose={handleModalClose}
+        handleModalClose={handleUpdateModalClose}
       />
       <h1 style={{ color: 'var(--text-color)'}}>Books</h1>
       <AppTable
