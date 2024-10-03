@@ -9,7 +9,7 @@ import './Navbar.css'
 
 function Navbar() {
 
-  const pages = ['Books', 'Authors', 'Categories', 'Publishers', 'Borrows', 'Dashboard'];
+  const pages = ['Books', 'Authors', 'Categories', 'Publishers', 'Borrows'];
 
   return (
     <nav className="navbar">
