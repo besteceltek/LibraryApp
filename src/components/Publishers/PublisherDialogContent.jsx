@@ -12,7 +12,7 @@ function PublisherDialogContent({ publisherObject, inputChangeFunction }) {
         value={publisherObject.name}
         size="small"
         onChange={inputChangeFunction}
-        autoComplete='false'
+        autoComplete='off'
       />
       <TextField
         required
@@ -21,7 +21,7 @@ function PublisherDialogContent({ publisherObject, inputChangeFunction }) {
         value={publisherObject.establishmentYear}
         size="small"
         onChange={inputChangeFunction}
-        autoComplete='false'
+        autoComplete='off'
       />
       <TextField
         required
@@ -30,7 +30,7 @@ function PublisherDialogContent({ publisherObject, inputChangeFunction }) {
         value={publisherObject.address}
         size="small"
         onChange={inputChangeFunction}
-        autoComplete='false'
+        autoComplete='off'
       />
     </DialogContent>
   )

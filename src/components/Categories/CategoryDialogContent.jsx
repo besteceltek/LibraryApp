@@ -12,7 +12,7 @@ function CategoryDialogContent({ categoryObject, inputChangeFunction }) {
         value={categoryObject.name}
         size="small"
         onChange={inputChangeFunction}
-        autoComplete='false'
+        autoComplete='off'
       />
       <TextField
         required
@@ -21,7 +21,7 @@ function CategoryDialogContent({ categoryObject, inputChangeFunction }) {
         value={categoryObject.description}
         size="small"
         onChange={inputChangeFunction}
-        autoComplete='false'
+        autoComplete='off'
       />
     </DialogContent>
   )

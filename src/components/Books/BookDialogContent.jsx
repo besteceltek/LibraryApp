@@ -18,7 +18,7 @@ const MenuProps = {
       width: 250,
     },
   },
-};
+};  
 
 function getStyles(categoryName, selectedCategories, theme) {
   return {
@@ -56,7 +56,7 @@ function BookDialogContent(
             value={bookObject[key]}
             size="small"
             onChange={inputChangeFunction}
-            autoComplete='false'
+            autoComplete='off'
           />
         )
       } else if (key === "author" || key === "publisher") {

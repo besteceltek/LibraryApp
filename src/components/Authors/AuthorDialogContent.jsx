@@ -12,7 +12,7 @@ function AuthorDialogContent({ authorObject, inputChangeFunction }) {
         value={authorObject.name}
         size="small"
         onChange={inputChangeFunction}
-        autoComplete='false'
+        autoComplete='off'
       />
       <TextField
         required
@@ -21,7 +21,7 @@ function AuthorDialogContent({ authorObject, inputChangeFunction }) {
         value={authorObject.country}
         size="small"
         onChange={inputChangeFunction}
-        autoComplete='false'
+        autoComplete='off'
       />
       <TextField
         required
@@ -30,7 +30,7 @@ function AuthorDialogContent({ authorObject, inputChangeFunction }) {
         value={authorObject.birthDate}
         size="small"
         onChange={inputChangeFunction}
-        autoComplete='false'
+        autoComplete='off'
       />
     </DialogContent>
   )
