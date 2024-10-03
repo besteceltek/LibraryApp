@@ -28,7 +28,7 @@ function AddBorrowDialogContent({ borrowObject, inputChangeFunction, handleBookS
         <InputLabel id="book-select-label">Book</InputLabel>
         <Select
           labelId="book-select-label"
-          value={borrowObject.book?.id ? borrowObject.book.id : ""}
+          value={borrowObject.book?.id}
           label="Book"
           name="bookForBorrowingRequest"
           onChange={handleBookSelect}
