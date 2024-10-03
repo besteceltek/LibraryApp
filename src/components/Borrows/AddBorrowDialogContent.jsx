@@ -5,7 +5,7 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 
-function BorrowDialogContent({ borrowObject, inputChangeFunction, handleBookSelect, books }) {
+function AddBorrowDialogContent({ borrowObject, inputChangeFunction, handleBookSelect, books }) {
   return (
     <DialogContent id='content'>
       {Object.keys(borrowObject).map((key) => {
@@ -24,11 +24,11 @@ function BorrowDialogContent({ borrowObject, inputChangeFunction, handleBookSele
           )
         }
       })}
-      <FormControl sx={{ m: 1, minWidth: 300 }} size="small">
+      <FormControl sx={{ width: 300}} size="small">
         <InputLabel id="book-select-label">Book</InputLabel>
         <Select
           labelId="book-select-label"
-          value={borrowObject.book?.id}
+          value={borrowObject.book?.id ? borrowObject.book.id : ""}
           label="Book"
           name="bookForBorrowingRequest"
           onChange={handleBookSelect}
@@ -47,4 +47,4 @@ function BorrowDialogContent({ borrowObject, inputChangeFunction, handleBookSele
   )
 }
 
-export default BorrowDialogContent
+export default AddBorrowDialogContent
