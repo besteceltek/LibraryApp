@@ -45,14 +45,14 @@ function AppTable({ keyItem, list, updateFunc, deleteFunc }) {
                     <TableCell 
                       id='body-cell' 
                       key={key} 
-                      sx={{ flexGrow: 1, textAlign: 'left', width: '15%' }}
+                      sx={{ flexGrow: 1, textAlign: 'left', width: '20%' }}
                     >
                       {typeof prop[key] === "object" ? prop[key].name : prop[key]}
                     </TableCell>
                   )
                 }
               })}
-              <TableCell id='action-cell' sx={{ width: 300, textAlign: 'center' }}>
+              <TableCell id='action-cell' sx={{ width: 200, textAlign: 'center' }}>
                 <Box id='action-buttons'>
                   <AppButton
                     text="Update"
