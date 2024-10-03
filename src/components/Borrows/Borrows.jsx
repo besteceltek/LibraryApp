@@ -141,7 +141,7 @@ function Borrows() {
   }
 
   const handleUpdateBorrow = () => {
-    axios.put(import.meta.env.VITE_APP_BASE_URL + "api/v1/borrows/" + updateBorrow.id, updateBorrow)
+    axios.put(import.meta.env.VITE_APP_BASE_URL + "/api/v1/borrows/" + updateBorrow.id, updateBorrow)
     .then(() => {
       setUpdatePage(true)
     })
