@@ -6,6 +6,7 @@ import AuthorDialogContent from './AuthorDialogContent'
 import AddModal from '../Utils/AddUpdateModals/AddModal'
 import UpdateModal from '../Utils/AddUpdateModals/UpdateModal'
 import AppTable from '../Utils/AppTable'
+import ErrorModal from "../Utils/AddUpdateModals/ErrorModal";
 
 function Authors() {
   const [authors, setAuthors] = useState([])
@@ -37,6 +38,17 @@ function Authors() {
     setUpdateModalOpen(false);
   };
 
+  const [error, setError] = useState()
+  const [errorModalOpen, setErrorModalOpen] = useState(false);
+
+  const handleErrorModalOpen = () => {
+    setErrorModalOpen(true);
+  };
+
+  const handleErrorModalClose = () => {
+    setErrorModalOpen(false);
+  };
+
   useEffect(() => {
     axios.get(import.meta.env.VITE_APP_BASE_URL + "/api/v1/authors")
     .then(res => {
@@ -59,7 +71,8 @@ function Authors() {
       )
     })
     .catch((err) => {
-      console.log(err)
+      handleErrorModalOpen()
+      setError(err)
     })
   }
 
@@ -84,6 +97,10 @@ function Authors() {
         }
       )
     })
+    .catch((err) => {
+      handleErrorModalOpen()
+      setError(err)
+    })
   }
 
   const handleUpdateAuthorInputChange = (e) => {
@@ -103,6 +120,10 @@ function Authors() {
     axios.delete(import.meta.env.VITE_APP_BASE_URL + "/api/v1/authors/" + e.target.id)
     .then(() => {
       setUpdatePage(true)
+    })
+    .catch((err) => {
+      handleErrorModalOpen()
+      setError(err)
     })
   }
 
@@ -133,6 +154,11 @@ function Authors() {
         updateFunction={handleUpdateAuthor}
         updateModalOpen={updateModalOpen}
         handleModalClose={handleUpdateModalClose}
+      />
+      <ErrorModal
+        error={error}
+        errorModalOpen={errorModalOpen}
+        handleModalClose={handleErrorModalClose}
       />
       <h1 style={{ color: 'var(--text-color)'}}>Authors</h1>
       <AppTable

@@ -5,6 +5,7 @@ import AppTable from "../Utils/AppTable";
 import AddModal from "../Utils/AddUpdateModals/AddModal";
 import UpdateModal from "../Utils/AddUpdateModals/UpdateModal";
 import BookDialogContent from "./BookDialogContent";
+import ErrorModal from "../Utils/AddUpdateModals/ErrorModal";
 
 function Books() {
   
@@ -77,6 +78,17 @@ function Books() {
 
   const handleUpdateModalClose = () => {
     setUpdateModalOpen(false);
+  };
+
+  const [error, setError] = useState()
+  const [errorModalOpen, setErrorModalOpen] = useState(false);
+
+  const handleErrorModalOpen = () => {
+    setErrorModalOpen(true);
+  };
+
+  const handleErrorModalClose = () => {
+    setErrorModalOpen(false);
   };
 
   useEffect(() => {
@@ -170,7 +182,8 @@ function Books() {
       )
     })
     .catch((err) => {
-      console.log(err)
+      handleErrorModalOpen()
+      setError(err)
     })
   }
 
@@ -178,6 +191,10 @@ function Books() {
     axios.delete(import.meta.env.VITE_APP_BASE_URL + "/api/v1/books/" + e.target.id)
     .then(() => {
       setUpdatePage(true)
+    })
+    .catch((err) => {
+      handleErrorModalOpen()
+      setError(err)
     })
   }
 
@@ -257,6 +274,10 @@ function Books() {
         }
       )
     })
+    .catch((err) => {
+      handleErrorModalOpen()
+      setError(err)
+    })
   }
 
   return (
@@ -296,6 +317,11 @@ function Books() {
         updateFunction={handleUpdateBook}
         updateModalOpen={updateModalOpen}
         handleModalClose={handleUpdateModalClose}
+      />
+      <ErrorModal
+        error={error}
+        errorModalOpen={errorModalOpen}
+        handleModalClose={handleErrorModalClose}
       />
       <h1 style={{ color: 'var(--text-color)'}}>Books</h1>
       <AppTable

@@ -6,6 +6,7 @@ import AddModal from "../Utils/AddUpdateModals/AddModal";
 import UpdateModal from "../Utils/AddUpdateModals/UpdateModal";
 import AddBorrowDialogContent from "./AddBorrowDialogContent";
 import UpdateBorrowDialogContent from "./UpdateBorrowDialogContent";
+import ErrorModal from "../Utils/AddUpdateModals/ErrorModal";
 
 function Borrows() {
   const borrowForKeys = {
@@ -49,6 +50,17 @@ function Borrows() {
 
   const handleUpdateModalClose = () => {
     setUpdateModalOpen(false);
+  };
+
+  const [error, setError] = useState()
+  const [errorModalOpen, setErrorModalOpen] = useState(false);
+
+  const handleErrorModalOpen = () => {
+    setErrorModalOpen(true);
+  };
+
+  const handleErrorModalClose = () => {
+    setErrorModalOpen(false);
   };
 
   useEffect(() => {
@@ -99,7 +111,8 @@ function Borrows() {
       )
     })
     .catch((err) => {
-      console.log(err)
+      handleErrorModalOpen()
+      setError(err)
     })
   }
 
@@ -107,6 +120,10 @@ function Borrows() {
     axios.delete(import.meta.env.VITE_APP_BASE_URL + "/api/v1/borrows/" + e.target.id)
     .then(() => {
       setUpdatePage()
+    })
+    .catch((err) => {
+      handleErrorModalOpen()
+      setError(err)
     })
   }
 
@@ -128,10 +145,12 @@ function Borrows() {
     .then(() => {
       setUpdatePage(true)
     })
+    .catch((err) => {
+      handleErrorModalOpen()
+      setError(err)
+    })
   }
   
-  
-
   return (
     <div>
       <AddModal
@@ -157,6 +176,11 @@ function Borrows() {
         updateFunction={handleUpdateBorrow}
         updateModalOpen={updateModalOpen}
         handleModalClose={handleUpdateModalClose}
+      />
+      <ErrorModal
+        error={error}
+        errorModalOpen={errorModalOpen}
+        handleModalClose={handleErrorModalClose}
       />
       <h1 style={{ color: 'var(--text-color)'}}>Book Borrows</h1>
       <AppTable

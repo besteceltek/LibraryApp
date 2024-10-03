@@ -5,6 +5,7 @@ import PublisherDialogContent from './PublisherDialogContent'
 import AddModal from '../Utils/AddUpdateModals/AddModal'
 import UpdateModal from '../Utils/AddUpdateModals/UpdateModal'
 import AppTable from '../Utils/AppTable'
+import ErrorModal from "../Utils/AddUpdateModals/ErrorModal";
 
 function Publishers() {
   const [publishers, setPublishers] = useState([])
@@ -35,6 +36,17 @@ function Publishers() {
     setUpdateModalOpen(false);
   };
 
+  const [error, setError] = useState()
+  const [errorModalOpen, setErrorModalOpen] = useState(false);
+
+  const handleErrorModalOpen = () => {
+    setErrorModalOpen(true);
+  };
+
+  const handleErrorModalClose = () => {
+    setErrorModalOpen(false);
+  };
+
   useEffect(() => {
     axios.get(import.meta.env.VITE_APP_BASE_URL + "/api/v1/publishers")
     .then((res) => {
@@ -62,9 +74,10 @@ function Publishers() {
           address: ""
         }
       )
-  })
+    })
     .catch((err) => {
-      console.log(err)
+      handleErrorModalOpen()
+      setError(err)
     })
   }
 
@@ -72,6 +85,10 @@ function Publishers() {
     axios.delete(import.meta.env.VITE_APP_BASE_URL + "/api/v1/publishers/" + e.target.id)
     .then(() => {
       setUpdatePage(true)
+    })
+    .catch((err) => {
+      handleErrorModalOpen()
+      setError(err)
     })
   }
 
@@ -101,6 +118,10 @@ function Publishers() {
         }
       )
     })
+    .catch((err) => {
+      handleErrorModalOpen()
+      setError(err)
+    })
   }
 
   return (
@@ -126,6 +147,11 @@ function Publishers() {
         updateFunction={handleUpdatePublisher}
         updateModalOpen={updateModalOpen}
         handleModalClose={handleUpdateModalClose}
+      />
+      <ErrorModal
+        error={error}
+        errorModalOpen={errorModalOpen}
+        handleModalClose={handleErrorModalClose}
       />
       <h1 style={{ color: 'var(--text-color)'}}>Publishers</h1>
       <AppTable

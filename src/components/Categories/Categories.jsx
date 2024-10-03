@@ -5,7 +5,7 @@ import AddModal from "../Utils/AddUpdateModals/AddModal";
 import UpdateModal from "../Utils/AddUpdateModals/UpdateModal";
 import CategoryDialogContent from "./CategoryDialogContent";
 import AppTable from "../Utils/AppTable";
-
+import ErrorModal from "../Utils/AddUpdateModals/ErrorModal";
 
 function Categories() {
   const [categories, setCategories] = useState([])
@@ -32,6 +32,17 @@ function Categories() {
 
   const handleUpdateModalClose = () => {
     setUpdateModalOpen(false);
+  };
+
+  const [error, setError] = useState()
+  const [errorModalOpen, setErrorModalOpen] = useState(false);
+
+  const handleErrorModalOpen = () => {
+    setErrorModalOpen(true);
+  };
+
+  const handleErrorModalClose = () => {
+    setErrorModalOpen(false);
   };
 
   useEffect(() => {
@@ -62,7 +73,8 @@ function Categories() {
       )
     })
     .catch((err) => {
-      console.log(err)
+      handleErrorModalOpen()
+      setError(err)
     })
   }
 
@@ -71,12 +83,16 @@ function Categories() {
     .then(() => {
       setUpdatePage(true)
     })
+    .catch((err) => {
+      handleErrorModalOpen()
+      setError(err)
+    })
   }
 
   const handleUpdateCategoryBtn = (category) => {
     setUpdateCategory(category)
     handleUpdateModalOpen()
-    console.log(updateCategory)
+    console.log(category)
   }
 
   const handleUpdateCategoryInputChange = (e) => {
@@ -88,6 +104,7 @@ function Categories() {
   }
 
   const handleUpdateCategory = () => {
+    console.log(updateCategory)
     axios.put(import.meta.env.VITE_APP_BASE_URL + "/api/v1/categories/" + updateCategory.id, updateCategory)
     .then(() => {
       setUpdatePage(true)
@@ -100,7 +117,8 @@ function Categories() {
       )
     })
     .catch((err) => {
-      console.log(err.message)
+      handleErrorModalOpen()
+      setError(err)
     })
   }
 
@@ -127,6 +145,11 @@ function Categories() {
         updateFunction={handleUpdateCategory}
         updateModalOpen={updateModalOpen}
         handleModalClose={handleUpdateModalClose}
+      />
+      <ErrorModal
+        error={error}
+        errorModalOpen={errorModalOpen}
+        handleModalClose={handleErrorModalClose}
       />
       <h1 style={{ color: 'var(--text-color)'}}>Categories</h1>
       <AppTable
