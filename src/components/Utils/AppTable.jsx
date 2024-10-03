@@ -47,7 +47,7 @@ function AppTable({ keyItem, list, updateFunc, deleteFunc }) {
                       key={key} 
                       sx={{ flexGrow: 1, textAlign: 'left', width: '20%' }}
                     >
-                      {typeof prop[key] === "object" ? prop[key].name : prop[key]}
+                      {typeof prop[key] === "object" ? prop[key]?.name : prop[key]}
                     </TableCell>
                   )
                 }
