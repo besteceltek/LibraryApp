@@ -45,46 +45,46 @@ function BookDialogContent(
 
   return (
     <DialogContent id='content'>
-    {Object.keys(bookObject).map((key) => {
-      if (key === "name" || key === "publicationYear" || key === "stock") {
-        return (
-          <TextField
-            key={`book-${key}-input`}
-            required
-            label={key.charAt(0).toUpperCase() + key.slice(1)}
-            name={key}
-            value={bookObject[key]}
-            size="small"
-            onChange={inputChangeFunction}
-            autoComplete='off'
-          />
-        )
-      } else if (key === "author" || key === "publisher") {
-        return (
-          <FormControl key={`book-${key}-input`} size="small">
-            <InputLabel id={`${key}-select-label`}>
-              {key.charAt(0).toUpperCase() + key.slice(1)}
-            </InputLabel>
-            <Select
-              labelId={`${key}-select-label`}
-              value={bookObject[key].id}
+      {Object.keys(bookObject).map((key) => {
+        if (key === "name" || key === "publicationYear" || key === "stock") {
+          return (
+            <TextField
+              key={`book-${key}-input`}
+              required
               label={key.charAt(0).toUpperCase() + key.slice(1)}
               name={key}
-              onChange={key === "author" ? handleAuthorSelect : handlePublisherSelect}
-            >
-              {(key === "author" ? authors : publishers).map((prop, index) => (
-                <MenuItem 
-                  key={`book-${key}-menu-item-${index}`} 
-                  value={prop.id}
-                >
-                  {prop.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        )
-      }
-    })}
+              value={bookObject[key]}
+              size="small"
+              onChange={inputChangeFunction}
+              autoComplete='off'
+            />
+          )
+        } else if (key === "author" || key === "publisher") {
+          return (
+            <FormControl key={`book-${key}-input`} size="small">
+              <InputLabel id={`${key}-select-label`}>
+                {key.charAt(0).toUpperCase() + key.slice(1)}
+              </InputLabel>
+              <Select
+                labelId={`${key}-select-label`}
+                value={bookObject[key].id}
+                label={key.charAt(0).toUpperCase() + key.slice(1)}
+                name={key}
+                onChange={key === "author" ? handleAuthorSelect : handlePublisherSelect}
+              >
+                {(key === "author" ? authors : publishers).map((prop, index) => (
+                  <MenuItem 
+                    key={`book-${key}-menu-item-${index}`} 
+                    value={prop.id}
+                  >
+                    {prop.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          )
+        }
+      })}
       <FormControl sx={{ width: 300}} size="small">
         <InputLabel id="category-select-label">Category</InputLabel>
         <Select
@@ -94,14 +94,26 @@ function BookDialogContent(
           value={selectedCategories}
           onChange={handleCategorySelect}
           input={<OutlinedInput label="Category"/>}
-          renderValue={(selected) => (
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-              {selected.map((value) => {
-                const category = categories.find((cat) => cat.id === value);
-                return <Chip key={value} label={category ? category.name : ''} /> 
-              })}
-            </Box>
-          )}
+          renderValue={(selected) => {
+            if (!selected || selected.length === 0) {
+              return (
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                  {bookObject.categories?.map((category) => {
+                    return <Chip key={`category-${category.id}`} label={category ? category.name : ''} /> 
+                  })}
+                </Box>
+              )
+            } else {
+              return (
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                  {selected.map((value) => {
+                    const category = categories.find((cat) => cat.id === value);
+                    return <Chip key={value} label={category ? category.name : ''} /> 
+                  })}
+                </Box>
+              )
+            }
+          }}
           MenuProps={MenuProps}
         >
           {categories.map((category, index) => (

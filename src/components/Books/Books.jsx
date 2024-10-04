@@ -199,8 +199,9 @@ function Books() {
   }
 
   const handleUpdateBookBtn = (book) => {
-    handleUpdateModalOpen()
+    setUpdatedCategories(book.categories.map(cat => cat.id))
     setUpdateBook(book)
+    handleUpdateModalOpen()
   }
 
   const handleUpdateBookInputChange = (e) => {
