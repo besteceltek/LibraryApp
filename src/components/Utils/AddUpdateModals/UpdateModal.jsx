@@ -1,8 +1,8 @@
 import './Modal.css'
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
+import AppButton from '../AppButton';
 
 function UpdateModal({ dialogContent, prop, updateFunction, updateModalOpen, handleModalClose }) {
 
@@ -24,8 +24,15 @@ function UpdateModal({ dialogContent, prop, updateFunction, updateModalOpen, han
         <DialogTitle>Update {prop}</DialogTitle>
         {dialogContent}
         <DialogActions id='actions'>
-          <Button onClick={handleModalClose}>Cancel</Button>
-          <Button type="submit">Update</Button>
+          <AppButton
+            text="Cancel"
+            buttonFunc={handleModalClose}
+          />
+          <AppButton
+            text="Update"
+            buttonFunc={handleModalClose}
+            type="submit"
+          />
         </DialogActions>
       </Dialog>
     </>

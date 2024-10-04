@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import './Modal.css'
-import Button from '@mui/material/Button';
-import AppButton from '../AppButton'
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
+import AppButton from '../AppButton';
 
 function AddModal({ dialogContent, prop, addFunction }) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -38,8 +37,15 @@ function AddModal({ dialogContent, prop, addFunction }) {
         <DialogTitle>Add {prop}</DialogTitle>
         {dialogContent}
         <DialogActions id='actions'>
-          <Button onClick={handleModalClose}>Cancel</Button>
-          <Button type="submit">Add</Button>
+          <AppButton
+            text="Cancel"
+            buttonFunc={handleModalClose}
+          />
+          <AppButton
+            text="Add"
+            buttonFunc={handleModalClose}
+            type="submit"
+          />
         </DialogActions>
       </Dialog>
     </div>
